@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 import { HbPromiseIc } from '../../assets/svgs';
 
 const Main = () => {
