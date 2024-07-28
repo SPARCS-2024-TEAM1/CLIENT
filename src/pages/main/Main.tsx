@@ -1,7 +1,13 @@
 import styled from '@emotion/styled';
+import { HbPromiseIc } from '../../assets/svgs';
 
 const Main = () => {
-  return <TestDiv>안녕하세요</TestDiv>;
+  return (
+    <>
+      <HbPromiseIc />
+      <TestDiv>안녕하세요</TestDiv>
+    </>
+  );
 };
 
 export default Main;
