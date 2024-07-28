@@ -1,12 +1,15 @@
 import { Global, ThemeProvider } from '@emotion/react';
 import styled from '@emotion/styled';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
+import Router from './Router';
 import globalStyle from './styles/globalStyle';
 import theme from './styles/theme';
-import Router from './Router';
 
 const App = () => {
+  const queryClient = new QueryClient();
+
   const setScreenSize = () => {
     // vh 관련
     const vh = window.innerHeight * 0.01;
@@ -28,12 +31,14 @@ const App = () => {
   }, []);
 
   return (
-    <Wrapper>
-      <ThemeProvider theme={theme}>
-        <Global styles={globalStyle} />
-        <Router />
-      </ThemeProvider>
-    </Wrapper>
+    <QueryClientProvider client={queryClient}>
+      <Wrapper>
+        <ThemeProvider theme={theme}>
+          <Global styles={globalStyle} />
+          <Router />
+        </ThemeProvider>
+      </Wrapper>
+    </QueryClientProvider>
   );
 };
 
