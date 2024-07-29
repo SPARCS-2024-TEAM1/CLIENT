@@ -1,52 +1,41 @@
-import { useState } from 'react';
+import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { HbPromiseIc, ArrowLeftIc } from '../../assets/svgs';
-// import FullBtn from '../../components/commons/FullBtn';
-import Header from '../../components/commons/Header';
-import Input from '../../components/commons/Input';
+import FullBtn from '../../components/commons/FullBtn';
+import Spacing from '../../components/commons/Spacing';
 import Title from '../../components/commons/Title';
-import TwoBtn from '../../components/commons/TwoBtn';
 
 const Main = () => {
   const navigate = useNavigate();
-  const [inputVal, setInputVal] = useState('');
 
-  const handleInputVal = (val: string) => {
-    setInputVal(val);
+  const onClickRecordToday = () => {
+    navigate('/record');
   };
 
-  const handleOnClickFullBtn = () => {
-    navigate('/');
+  const onClickPastFeeling = () => {
+    navigate('/list');
   };
-
-  const handleOnClickLeft = () => {
-    navigate('/');
-  };
-
   return (
     <>
-      <Header LeftSvg={ArrowLeftIc} onClickLeft={handleOnClickLeft} title="지난 감정기록"></Header>
-      <HbPromiseIc />
-      <Title text={`안녕하세요 \n전화번호를 입력해주세요`} type="title" />
-      <Title text={`또리누나의사랑 님의 \n감정 기록 공간`} type="head" align="center" />
-      <Input placeholder="닉네임을 입력해주세요" inputVal={inputVal} handleInputVal={handleInputVal} wordLimit={20} />
-      {/* <FullBtn
-        disabledText="닉네임을 입력해주세요"
-        activeText="감정 기록해볼까요?"
-        isBtnDisable={inputVal.length > 20 || inputVal.length === 0}
-        onClick={handleOnClickFullBtn}
-      /> */}
-      <TwoBtn
-        leftText="지난 감정들 보러가기"
-        leftColorType="gray"
-        leftOnClick={handleOnClickLeft}
-        rightText="답장 사진 저장하기"
-        rightColorType="yellow"
-        rightOnClick={handleOnClickFullBtn}
-      />
+      {/* 닉네임 앞에 값으로 변경 필요 */}
+      <Title text={`또리누나의사랑 님의\n감정 기록 공간`} type="head" paddingTop={8} align="center" />
+      <Spacing marginBottom="2.3" />
+      <ImgDiv />
+      <Spacing marginBottom="1.6" />
+      {/* 버튼 위치 조정 필요 */}
+      {/* disable 처리 필요 */}
+      <FullBtn activeText="오늘의 감정 기록하기" isBtnDisable={false} bottom={false} onClick={onClickRecordToday} />
+      <Spacing marginBottom="1" />
+      <FullBtn disabledText="지난 감정 기록 보기" isBtnDisable={true} bottom={false} onClick={onClickPastFeeling} />
     </>
   );
 };
 
 export default Main;
+
+const ImgDiv = styled.div`
+  width: 100%;
+  height: 32rem;
+
+  background-color: ${({ theme }) => theme.colors.key};
+`;
