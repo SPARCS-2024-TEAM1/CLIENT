@@ -13,7 +13,7 @@ const Input = (props: InputPropsType) => {
 
   return (
     <>
-      <Wrapper placeholder={placeholder} value={inputVal} onChange={handleInputVal} />
+      <Wrapper placeholder={placeholder} value={inputVal} onChange={handleInputVal} $wordLimit={wordLimit !== 0} />
       {wordLimit !== 0 && (
         <WarnText $wordLimit={inputVal.length > wordLimit}>
           {inputVal.length > wordLimit ? '20자가 초과되었어요' : '최대 20자까지 입력할 수 있어요!'}
@@ -25,10 +25,10 @@ const Input = (props: InputPropsType) => {
 
 export default Input;
 
-const Wrapper = styled.input`
+const Wrapper = styled.input<{ $wordLimit: boolean }>`
   width: 100%;
   height: 5rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: ${({ $wordLimit }) => ($wordLimit ? '0.8rem' : '')};
   padding: 1.2rem 0.7rem;
   border: none;
   border-radius: 4px;

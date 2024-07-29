@@ -70,6 +70,7 @@ const Step문자인증 = () => {
         disabledText="확인"
         isBtnDisable={authCode.length !== 6}
         onClick={onClickCheckAuthCode}
+        bottom={false}
       />
     </>
   );
