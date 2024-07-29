@@ -11,7 +11,7 @@ import Title from '../../components/commons/Title';
 
 const TodayFeeling = () => {
   const navigate = useNavigate();
-  const [selectedFeelingArr, setSelectedFeelingArr] = useState(Array(9).fill(false));
+  const [feelingArr, setFeelingArr] = useState(Array(9).fill(false));
   const [selectedFeeling, setSelectedFeeling] = useState('');
 
   const onClickBack = () => {
@@ -19,8 +19,8 @@ const TodayFeeling = () => {
   };
 
   const onClickFeeling = (id: number, feeling: string) => {
-    const updatedFeeling = selectedFeelingArr.map((_, index) => index === id);
-    setSelectedFeelingArr(updatedFeeling);
+    const updatedFeeling = feelingArr.map((_, index) => index === id);
+    setFeelingArr(updatedFeeling);
     setSelectedFeeling(feeling);
   };
 
@@ -40,7 +40,7 @@ const TodayFeeling = () => {
             key={feeling.id}
             onClick={() => onClickFeeling(feeling.id, feeling.feeling)}
             $isFeelingClicked={selectedFeeling !== ''}
-            $isSelected={selectedFeelingArr[feeling.id]}
+            $isSelected={feelingArr[feeling.id]}
           />
         ))}
       </FeelingContainer>

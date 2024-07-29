@@ -10,7 +10,7 @@ export const theme = {
     grayScaleLg: '#BFBFBF',
     grayScaleMg: '#595956',
     grayScaleBg: '#323232',
-    grayScaleB_Text: '171717',
+    grayScaleB_Text: '#171717',
     transparentW80: 'rgba(255, 255, 255, 0.8)',
     transparentW40: 'rgba(243, 241, 234, 0.4)',
   },
