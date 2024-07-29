@@ -5,10 +5,11 @@ interface HeaderPropsType {
   LeftSvg?: React.FunctionComponent<React.ComponentProps<'svg'>>;
   onClickLeft?: () => void;
   children?: React.ReactNode;
+  title?: string;
 }
 
 const Header = (props: HeaderPropsType) => {
-  const { LeftSvg, onClickLeft, children } = props;
+  const { LeftSvg, onClickLeft, children, title } = props;
   return (
     <Wrapper>
       {LeftSvg && (
@@ -16,6 +17,7 @@ const Header = (props: HeaderPropsType) => {
           <LeftSvg onClick={onClickLeft} />
         </LeftSvgWrapper>
       )}
+      {title ? <Title>{title}</Title> : <></>}
       {children}
     </Wrapper>
   );
@@ -25,7 +27,7 @@ export default Header;
 
 const Wrapper = styled.header`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   position: fixed;
   top: 0;
@@ -36,6 +38,15 @@ const Wrapper = styled.header`
   padding: 1.6rem 2rem 0 1rem;
 `;
 
+const Title = styled.div`
+  color: ${({ theme }) => theme.colors.transparentW80};
+  ${({ theme }) => theme.fonts.Title2_SB_16};
+`;
+
 const LeftSvgWrapper = styled.div`
+  position: absolute;
+  top: 1.6rem;
+  left: 1rem;
+
   cursor: pointer;
 `;

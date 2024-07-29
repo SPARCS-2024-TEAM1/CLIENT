@@ -26,7 +26,7 @@ const Main = () => {
 
   return (
     <>
-      <Header LeftSvg={ArrowLeftIc} onClickLeft={handleOnClickLeft}></Header>
+      <Header LeftSvg={ArrowLeftIc} onClickLeft={handleOnClickLeft} title="지난 감정기록"></Header>
       <HbPromiseIc />
       <Title text={`안녕하세요 \n전화번호를 입력해주세요`} type="title" />
       <Title text={`또리누나의사랑 님의 \n감정 기록 공간`} type="head" align="center" />

@@ -16,6 +16,7 @@ declare module '@emotion/react' {
     fonts: {
       Head1_SB_24: SerializedStyles;
       Title1_SB_20: SerializedStyles;
+      Title2_SB_16: SerializedStyles;
       Body1_M_18: SerializedStyles;
       Body2_SB_18: SerializedStyles;
       Caption1_M_12: SerializedStyles;
