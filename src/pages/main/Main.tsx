@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { HbPromiseIc } from '../../assets/svgs';
+import { HbPromiseIc, ArrowLeftIc } from '../../assets/svgs';
 import FullBtn from '../../components/commons/FullBtn';
+import Header from '../../components/commons/Header';
 import Input from '../../components/commons/Input';
 
 const Main = () => {
@@ -17,8 +18,13 @@ const Main = () => {
     navigate('/');
   };
 
+  const handleOnClickLeft = () => {
+    navigate('/');
+  };
+
   return (
     <>
+      <Header LeftSvg={ArrowLeftIc} onClickLeft={handleOnClickLeft}></Header>
       <HbPromiseIc />
       <Input placeholder="닉네임을 입력해주세요" inputVal={inputVal} handleInputVal={handleInputVal} wordLimit={20} />
       <FullBtn
