@@ -20,7 +20,7 @@ const CharacterChoose = () => {
   };
 
   const onClickNext = () => {
-    navigate('/record');
+    navigate('/summary');
   };
 
   const onClickCharacter = (id: number, feeling: string) => {

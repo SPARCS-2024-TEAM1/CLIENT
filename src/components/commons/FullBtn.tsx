@@ -62,6 +62,7 @@ const TopWrapper = styled.div`
 const DownWrapper = styled.div`
   position: fixed;
   bottom: 0;
+  z-index: 3;
 
   width: 100%;
   margin-left: -2rem;
@@ -69,7 +70,7 @@ const DownWrapper = styled.div`
 `;
 
 const Button = styled.button<{ $isBtnDisable: boolean; $btnColorType: string; $marginBottom: number }>`
-  z-index: 2;
+  z-index: 3;
 
   width: 100%;
   height: 5.6rem;
