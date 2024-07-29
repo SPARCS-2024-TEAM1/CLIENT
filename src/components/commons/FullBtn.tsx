@@ -6,22 +6,43 @@ interface fullBtnPropsType {
   isBtnDisable?: boolean;
   onClick?: () => void;
   bottom?: boolean;
+  btnColorType?: string;
+  marginBottom?: number;
 }
 
 const FullBtn = (props: fullBtnPropsType) => {
-  const { activeText, disabledText, isBtnDisable = true, onClick, bottom = true } = props;
+  const {
+    activeText,
+    disabledText,
+    isBtnDisable = true,
+    onClick,
+    bottom = true,
+    btnColorType = 'yellow',
+    marginBottom = 3.6,
+  } = props;
   return (
     <>
       {bottom ? (
         <DownWrapper>
-          <Button type="button" disabled={isBtnDisable} $isBtnDisable={isBtnDisable} onClick={onClick}>
+          <Button
+            type="button"
+            disabled={isBtnDisable}
+            $isBtnDisable={isBtnDisable}
+            $btnColorType={btnColorType}
+            onClick={onClick}
+            $marginBottom={marginBottom}>
             {isBtnDisable ? disabledText : activeText}
           </Button>
-          <BtnBackground />
         </DownWrapper>
       ) : (
         <TopWrapper>
-          <Button type="button" disabled={isBtnDisable} $isBtnDisable={isBtnDisable} onClick={onClick}>
+          <Button
+            type="button"
+            disabled={isBtnDisable}
+            $btnColorType={btnColorType}
+            $isBtnDisable={isBtnDisable}
+            onClick={onClick}
+            $marginBottom={marginBottom}>
             {isBtnDisable ? disabledText : activeText}
           </Button>
         </TopWrapper>
@@ -47,26 +68,30 @@ const DownWrapper = styled.div`
   padding: 0 2rem;
 `;
 
-const Button = styled.button<{ $isBtnDisable: boolean }>`
+const Button = styled.button<{ $isBtnDisable: boolean; $btnColorType: string; $marginBottom: number }>`
   z-index: 2;
 
   width: 100%;
   height: 5.6rem;
+  margin-bottom: ${({ $marginBottom }) => `${$marginBottom}rem`};
   padding: 0 1.5rem;
   border: none;
   border-radius: 5px;
 
-  background-color: ${({ $isBtnDisable, theme }) => ($isBtnDisable ? theme.colors.grayScaleMg : theme.colors.key)};
+  background-color: ${({ $isBtnDisable, $btnColorType, theme }) =>
+    $isBtnDisable
+      ? theme.colors.grayScaleMg
+      : $btnColorType === 'yellow'
+        ? theme.colors.key
+        : theme.colors.grayScaleMg};
 
-  color: ${({ $isBtnDisable, theme }) => ($isBtnDisable ? theme.colors.transparentW80 : theme.colors.grayScaleBg)};
+  color: ${({ $isBtnDisable, $btnColorType, theme }) =>
+    $isBtnDisable
+      ? theme.colors.transparentW80
+      : $btnColorType === 'yellow'
+        ? theme.colors.grayScaleBg
+        : theme.colors.transparentW80};
   ${({ theme }) => theme.fonts.Body2_SB_18};
 
   cursor: ${({ $isBtnDisable }) => ($isBtnDisable ? 'default' : 'cursor')};
-`;
-
-const BtnBackground = styled.div`
-  width: 100%;
-  height: 3.6rem;
-
-  background-color: ${({ theme }) => theme.colors.grayScaleBg};
 `;

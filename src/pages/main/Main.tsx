@@ -24,9 +24,22 @@ const Main = () => {
       <Spacing marginBottom="1.6" />
       {/* 버튼 위치 조정 필요 */}
       {/* disable 처리 필요 */}
-      <FullBtn activeText="오늘의 감정 기록하기" isBtnDisable={false} bottom={false} onClick={onClickRecordToday} />
-      <Spacing marginBottom="1" />
-      <FullBtn disabledText="지난 감정 기록 보기" isBtnDisable={true} bottom={false} onClick={onClickPastFeeling} />
+      <ButtonWrapper>
+        <FullBtn
+          activeText="오늘의 감정 기록하기"
+          isBtnDisable={false}
+          bottom={false}
+          marginBottom={0}
+          onClick={onClickRecordToday}
+        />
+        <FullBtn
+          activeText="지난 감정 기록 보기"
+          isBtnDisable={false}
+          btnColorType="gray"
+          bottom={false}
+          onClick={onClickPastFeeling}
+        />
+      </ButtonWrapper>
     </>
   );
 };
@@ -38,4 +51,16 @@ const ImgDiv = styled.div`
   height: 32rem;
 
   background-color: ${({ theme }) => theme.colors.key};
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: fixed;
+  bottom: 0;
+
+  width: 100%;
+  margin-left: -2rem;
+  padding: 0 2rem;
 `;
