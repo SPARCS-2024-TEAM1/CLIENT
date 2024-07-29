@@ -24,7 +24,7 @@ const Step닉네임 = () => {
 
   const onClickNicknameSubmit = () => {
     console.log('닉네임 post api 혹은 저장');
-    navigate('/onboarding/4');
+    navigate('/main');
   };
 
   return (
