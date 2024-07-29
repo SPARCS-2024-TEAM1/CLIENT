@@ -16,7 +16,7 @@ const Input = (props: InputPropsType) => {
       <Wrapper placeholder={placeholder} value={inputVal} onChange={handleInputVal} $wordLimit={wordLimit !== 0} />
       {wordLimit !== 0 && (
         <WarnText $wordLimit={inputVal.length > wordLimit}>
-          {inputVal.length > wordLimit ? '20자가 초과되었어요' : '최대 20자까지 입력할 수 있어요!'}
+          {inputVal.length > wordLimit ? `${wordLimit}자가 초과되었어요` : `최대 ${wordLimit}자까지 입력할 수 있어요!`}
         </WarnText>
       )}
     </>

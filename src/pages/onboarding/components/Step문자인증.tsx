@@ -14,6 +14,10 @@ const Step문자인증 = () => {
   const navigate = useNavigate();
   const [authCode, setAuthCode] = useState('');
 
+  const onClickBack = () => {
+    navigate('/onboarding/1');
+  };
+
   const TIME = 180 * 1000;
   const [timeLeft, setTimeLeft] = useState(TIME);
   const { minutes, seconds } = formatTime(timeLeft);
@@ -51,7 +55,7 @@ const Step문자인증 = () => {
 
   return (
     <>
-      <Header LeftSvg={ArrowLeftIc}>
+      <Header LeftSvg={ArrowLeftIc} onClickLeft={onClickBack}>
         <ReAuthBtn onClick={onClickGetAuthCode}>재발송</ReAuthBtn>
       </Header>
       <Title text="인증번호를 입력해주세요" type="middle" />
