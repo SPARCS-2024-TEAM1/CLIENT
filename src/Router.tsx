@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import CharacterChoose from './pages/charcterChoose/CharacterChoose';
 import Home from './pages/home/Home';
 import Main from './pages/main/Main';
 import Step닉네임 from './pages/onboarding/components/Step닉네임';
@@ -17,7 +18,7 @@ const Router = () => {
         <Route path="/onboarding/3" element={<Step닉네임 />} />
         <Route path="/main" element={<Main />} />
         <Route path="/todayFeeling" element={<TodayFeeling />} />
-        <Route path="/todayFeeling/character" element={<TodayFeeling />} />
+        <Route path="/character" element={<CharacterChoose />} />
       </Routes>
     </BrowserRouter>
   );

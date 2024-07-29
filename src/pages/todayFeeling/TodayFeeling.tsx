@@ -25,7 +25,7 @@ const TodayFeeling = () => {
   };
 
   const onClickNext = () => {
-    navigate('/todayFeeling/character');
+    navigate('/character');
   };
 
   return (
