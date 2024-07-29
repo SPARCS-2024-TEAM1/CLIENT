@@ -14,6 +14,6 @@ const Main = () => {
 export default Main;
 
 const TestDiv = styled.div`
-  color: ${({ theme }) => theme.colors.Blue};
-  ${({ theme }) => theme.fonts.Head1_B_20};
+  color: ${({ theme }) => theme.colors.red};
+  ${({ theme }) => theme.fonts.Body1_M_18};
 `;
