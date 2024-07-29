@@ -32,12 +32,12 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Wrapper>
-        <ThemeProvider theme={theme}>
-          <Global styles={globalStyle} />
+      <ThemeProvider theme={theme}>
+        <Global styles={globalStyle} />
+        <Wrapper>
           <Router />
-        </ThemeProvider>
-      </Wrapper>
+        </Wrapper>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };
@@ -47,7 +47,8 @@ export default App;
 const Wrapper = styled.div`
   width: 100vw;
   min-height: calc(var(--vh, 1vh) * 100);
+  padding: 0 2rem;
   border: none;
 
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.grayScaleBg};
 `;
