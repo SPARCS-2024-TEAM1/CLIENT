@@ -9,7 +9,7 @@ const Main = () => {
   const navigate = useNavigate();
 
   const onClickRecordToday = () => {
-    navigate('/record');
+    navigate('/todayFeeling');
   };
 
   const onClickPastFeeling = () => {
@@ -22,8 +22,6 @@ const Main = () => {
       <Spacing marginBottom="2.3" />
       <ImgDiv />
       <Spacing marginBottom="1.6" />
-      {/* 버튼 위치 조정 필요 */}
-      {/* disable 처리 필요 */}
       <ButtonWrapper>
         <FullBtn
           activeText="오늘의 감정 기록하기"

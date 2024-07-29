@@ -17,6 +17,7 @@ const Router = () => {
         <Route path="/onboarding/3" element={<Step닉네임 />} />
         <Route path="/main" element={<Main />} />
         <Route path="/todayFeeling" element={<TodayFeeling />} />
+        <Route path="/todayFeeling/character" element={<TodayFeeling />} />
       </Routes>
     </BrowserRouter>
   );
