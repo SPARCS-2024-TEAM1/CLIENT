@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { HbPromiseIc, ArrowLeftIc } from '../../assets/svgs';
-import FullBtn from '../../components/commons/FullBtn';
+// import FullBtn from '../../components/commons/FullBtn';
 import Header from '../../components/commons/Header';
 import Input from '../../components/commons/Input';
+import Title from '../../components/commons/Title';
 import TwoBtn from '../../components/commons/TwoBtn';
 
 const Main = () => {
@@ -27,6 +28,8 @@ const Main = () => {
     <>
       <Header LeftSvg={ArrowLeftIc} onClickLeft={handleOnClickLeft}></Header>
       <HbPromiseIc />
+      <Title text={`안녕하세요 \n전화번호를 입력해주세요`} type="title" />
+      <Title text={`또리누나의사랑 님의 \n감정 기록 공간`} type="head" align="center" />
       <Input placeholder="닉네임을 입력해주세요" inputVal={inputVal} handleInputVal={handleInputVal} wordLimit={20} />
       {/* <FullBtn
         disabledText="닉네임을 입력해주세요"
@@ -40,7 +43,7 @@ const Main = () => {
         leftOnClick={handleOnClickLeft}
         rightText="답장 사진 저장하기"
         rightColorType="yellow"
-        rightOnClick={handleOnClickLeft}
+        rightOnClick={handleOnClickFullBtn}
       />
     </>
   );
