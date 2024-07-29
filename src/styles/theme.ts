@@ -48,6 +48,13 @@ export const theme = {
       line-height: 1.74rem;
       letter-spacing: -0.012rem;
     `,
+    Body3_M_14: css`
+      font-family: 'Pretendard Variable', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 2.17rem;
+      letter-spacing: -0.014rem;
+    `,
   },
 };
 

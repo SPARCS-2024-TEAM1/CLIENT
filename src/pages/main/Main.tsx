@@ -5,6 +5,7 @@ import { HbPromiseIc, ArrowLeftIc } from '../../assets/svgs';
 import FullBtn from '../../components/commons/FullBtn';
 import Header from '../../components/commons/Header';
 import Input from '../../components/commons/Input';
+import TwoBtn from '../../components/commons/TwoBtn';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -27,11 +28,19 @@ const Main = () => {
       <Header LeftSvg={ArrowLeftIc} onClickLeft={handleOnClickLeft}></Header>
       <HbPromiseIc />
       <Input placeholder="닉네임을 입력해주세요" inputVal={inputVal} handleInputVal={handleInputVal} wordLimit={20} />
-      <FullBtn
+      {/* <FullBtn
         disabledText="닉네임을 입력해주세요"
         activeText="감정 기록해볼까요?"
         isBtnDisable={inputVal.length > 20 || inputVal.length === 0}
         onClick={handleOnClickFullBtn}
+      /> */}
+      <TwoBtn
+        leftText="지난 감정들 보러가기"
+        leftColorType="gray"
+        leftOnClick={handleOnClickLeft}
+        rightText="답장 사진 저장하기"
+        rightColorType="yellow"
+        rightOnClick={handleOnClickLeft}
       />
     </>
   );

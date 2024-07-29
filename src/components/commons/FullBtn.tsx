@@ -50,7 +50,7 @@ const Button = styled.button<{ $isBtnDisable: boolean }>`
 
 const BtnBackground = styled.div`
   width: 100%;
-  height: 2.8rem;
+  height: 3.6rem;
 
   background-color: ${({ theme }) => theme.colors.grayScaleBg};
 `;

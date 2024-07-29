@@ -19,6 +19,7 @@ declare module '@emotion/react' {
       Body1_M_18: SerializedStyles;
       Body2_SB_18: SerializedStyles;
       Caption1_M_12: SerializedStyles;
+      Body3_M_14: SerializedStyles;
     };
   }
 }
