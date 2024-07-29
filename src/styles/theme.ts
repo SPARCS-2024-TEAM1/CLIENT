@@ -4,8 +4,10 @@ export const theme = {
   colors: {
     red: '#FF7D7D',
     key: '#FCEE99',
+    brown: '#BEB7A9',
     grayScaleWhite: '#FFFFFF',
     grayScaleW_bg: '#F3F1EA',
+    grayScaleLg: '#BFBFBF',
     grayScaleMg: '#595956',
     grayScaleBg: '#323232',
     grayScaleB_Text: '171717',

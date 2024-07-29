@@ -3,25 +3,42 @@ import styled from '@emotion/styled';
 interface fullBtnPropsType {
   activeText?: string;
   disabledText?: string;
-  isBtnDisable: boolean;
+  isBtnDisable?: boolean;
   onClick?: () => void;
+  bottom?: boolean;
 }
 
 const FullBtn = (props: fullBtnPropsType) => {
-  const { activeText, disabledText, isBtnDisable, onClick } = props;
+  const { activeText, disabledText, isBtnDisable = true, onClick, bottom = true } = props;
   return (
-    <Wrapper>
-      <Button $isBtnDisable={isBtnDisable} onClick={onClick}>
-        {isBtnDisable ? disabledText : activeText}
-      </Button>
-      <BtnBackground />
-    </Wrapper>
+    <>
+      {bottom ? (
+        <DownWrapper>
+          <Button $isBtnDisable={isBtnDisable} onClick={onClick}>
+            {isBtnDisable ? disabledText : activeText}
+          </Button>
+          <BtnBackground />
+        </DownWrapper>
+      ) : (
+        <TopWrapper>
+          <Button $isBtnDisable={isBtnDisable} onClick={onClick}>
+            {isBtnDisable ? disabledText : activeText}
+          </Button>
+        </TopWrapper>
+      )}
+    </>
   );
 };
 
 export default FullBtn;
 
-const Wrapper = styled.div`
+const TopWrapper = styled.div`
+  display: flex;
+
+  width: 100%;
+`;
+
+const DownWrapper = styled.div`
   position: fixed;
   bottom: 0;
 
@@ -41,7 +58,6 @@ const Button = styled.button<{ $isBtnDisable: boolean }>`
 
   background-color: ${({ $isBtnDisable, theme }) => ($isBtnDisable ? theme.colors.grayScaleMg : theme.colors.key)};
 
-  /* 폰트 색상 변경 필요 */
   color: ${({ $isBtnDisable, theme }) => ($isBtnDisable ? theme.colors.transparentW80 : theme.colors.grayScaleBg)};
   ${({ theme }) => theme.fonts.Body2_SB_18};
 

@@ -4,12 +4,13 @@ interface TitlePropsType {
   text: string;
   type: string;
   align?: string;
+  paddingTop?: number;
 }
 
 const Title = (props: TitlePropsType) => {
-  const { text, type, align = 'start' } = props;
+  const { text, type, align = 'start', paddingTop = 8 } = props;
   return (
-    <Wrapper $type={type} $align={align}>
+    <Wrapper $type={type} $align={align} $paddingTop={paddingTop}>
       {text}
     </Wrapper>
   );
@@ -17,9 +18,11 @@ const Title = (props: TitlePropsType) => {
 
 export default Title;
 
-const Wrapper = styled.div<{ $type: string; $align: string }>`
+const Wrapper = styled.div<{ $type: string; $align: string; $paddingTop: number }>`
   display: flex;
   justify-content: ${({ $align }) => ($align === 'center' ? 'center' : 'flex-start')};
+
+  padding-top: ${({ $paddingTop }) => `${$paddingTop}rem`};
 
   color: ${({ theme }) => theme.colors.grayScaleW_bg};
   text-align: ${({ $align }) => ($align === 'center' ? 'center' : '')};

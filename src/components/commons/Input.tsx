@@ -4,21 +4,21 @@ import React from 'react';
 interface InputPropsType {
   placeholder: string;
   inputVal: string;
-  handleInputVal: (val: string) => void;
-  wordLimit: number;
+  handleInputVal: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  wordLimit?: number;
 }
 
 const Input = (props: InputPropsType) => {
-  const { placeholder, inputVal, handleInputVal, wordLimit } = props;
-  const handleChangeInputVal = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleInputVal(e.target.value);
-  };
+  const { placeholder, inputVal, handleInputVal, wordLimit = 0 } = props;
+
   return (
     <>
-      <Wrapper placeholder={placeholder} value={inputVal} onChange={handleChangeInputVal} />
-      <WarnText $wordLimit={inputVal.length > wordLimit}>
-        {inputVal.length > wordLimit ? '20자가 초과되었어요' : '최대 20자까지 입력할 수 있어요!'}
-      </WarnText>
+      <Wrapper placeholder={placeholder} value={inputVal} onChange={handleInputVal} />
+      {wordLimit !== 0 && (
+        <WarnText $wordLimit={inputVal.length > wordLimit}>
+          {inputVal.length > wordLimit ? '20자가 초과되었어요' : '최대 20자까지 입력할 수 있어요!'}
+        </WarnText>
+      )}
     </>
   );
 };
@@ -38,6 +38,10 @@ const Wrapper = styled.input`
   color: ${({ theme }) => theme.colors.grayScaleB_Text};
 
   ${({ theme }) => theme.fonts.Body1_M_18};
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.grayScaleLg};
+  }
 `;
 
 const WarnText = styled.p<{ $wordLimit: boolean }>`

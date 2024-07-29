@@ -5,8 +5,10 @@ declare module '@emotion/react' {
     colors: {
       red: string;
       key: string;
+      brown: string;
       grayScaleWhite: string;
       grayScaleW_bg: string;
+      grayScaleLg: string;
       grayScaleMg: string;
       grayScaleBg: string;
       grayScaleB_Text: string;
