@@ -29,6 +29,7 @@ const Wrapper = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   position: fixed;
   top: 0;
 

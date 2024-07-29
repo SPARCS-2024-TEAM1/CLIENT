@@ -14,14 +14,14 @@ const FullBtn = (props: fullBtnPropsType) => {
     <>
       {bottom ? (
         <DownWrapper>
-          <Button $isBtnDisable={isBtnDisable} onClick={onClick}>
+          <Button type="button" disabled={isBtnDisable} $isBtnDisable={isBtnDisable} onClick={onClick}>
             {isBtnDisable ? disabledText : activeText}
           </Button>
           <BtnBackground />
         </DownWrapper>
       ) : (
         <TopWrapper>
-          <Button $isBtnDisable={isBtnDisable} onClick={onClick}>
+          <Button type="button" disabled={isBtnDisable} $isBtnDisable={isBtnDisable} onClick={onClick}>
             {isBtnDisable ? disabledText : activeText}
           </Button>
         </TopWrapper>
