@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// import AudioRecord from './components/Record';
+import AudioRecord from './components/RecordTs';
 import { ArrowLeftIc, RestartIc } from '../../assets/svgs';
 import FullBtn from '../../components/commons/FullBtn';
 import Header from '../../components/commons/Header';
@@ -21,6 +23,7 @@ const RecordToday = () => {
     setIsStart(true);
   };
 
+  // 녹음 시작하고 얼마나 됐는지
   useEffect(() => {
     if (isStart && timeLeft > 0) {
       const timerId = setInterval(() => {
@@ -39,6 +42,7 @@ const RecordToday = () => {
       {/* 실제 캐릭터 이름으로 바꿔야함 */}
       <Title text={`버럭이한테 하고싶은 얘기를\n30초 동안 말해볼까요?`} type="title" align="center" paddingTop={9.45} />
       <Spacing marginBottom="4.035" />
+      <AudioRecord />
       <RecordWrapper>
         <RecordTempImg />
         <Timer>{`00:${timeLeft < 10 ? `0${timeLeft}` : timeLeft}`}</Timer>
