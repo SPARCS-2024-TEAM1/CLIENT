@@ -2,6 +2,7 @@ import { Global, ThemeProvider } from '@emotion/react';
 import styled from '@emotion/styled';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { RecoilRoot } from 'recoil';
 
 import Router from './Router';
 import globalStyle from './styles/globalStyle';
@@ -34,9 +35,11 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <Global styles={globalStyle} />
-        <Wrapper>
-          <Router />
-        </Wrapper>
+        <RecoilRoot>
+          <Wrapper>
+            <Router />
+          </Wrapper>
+        </RecoilRoot>
       </ThemeProvider>
     </QueryClientProvider>
   );

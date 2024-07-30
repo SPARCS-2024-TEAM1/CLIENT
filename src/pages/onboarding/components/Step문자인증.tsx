@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useState, ChangeEvent, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import { ArrowLeftIc, ClockIc } from '../../../assets/svgs';
 import FullBtn from '../../../components/commons/FullBtn';
@@ -8,22 +9,23 @@ import Header from '../../../components/commons/Header';
 import Input from '../../../components/commons/Input';
 import Spacing from '../../../components/commons/Spacing';
 import Title from '../../../components/commons/Title';
+import { phoneNumberState } from '../../../states/phoneNumberState';
 import { usePostPhoneNumber, usePostVerifyCode } from '../hooks/queries';
 import { formatTime } from '../utils/formatTime';
 
 const Step문자인증 = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [authCode, setAuthCode] = useState('');
   const [isValid, setIsValid] = useState<boolean | undefined>();
+  const phoneNumber = useRecoilValue(phoneNumberState);
 
-  const { mutate: postPhoneNumber } = usePostPhoneNumber(location.state ? location.state.phoneNumber : '');
+  const { mutate: postPhoneNumber } = usePostPhoneNumber(phoneNumber);
   const {
     mutate: postVerifyCode,
     data,
     isSuccess,
   } = usePostVerifyCode({
-    phoneNumber: location.state ? location.state.phoneNumber : '',
+    phoneNumber: phoneNumber,
     verificationCode: authCode,
   });
 
@@ -51,7 +53,7 @@ const Step문자인증 = () => {
 
   // 재전송 클릭
   const onClickGetAuthCode = () => {
-    postPhoneNumber(location.state ? location.state.phoneNumber : '');
+    postPhoneNumber();
     setTimeLeft(TIME);
   };
 
@@ -69,7 +71,7 @@ const Step문자인증 = () => {
     if (isSuccess) {
       setIsValid(true);
       navigate('/onboarding/3', {
-        state: { phoneNumber: location.state ? location.state.phoneNumber : '' },
+        state: { phoneNumber: phoneNumber },
       });
     }
   }, [isSuccess]);

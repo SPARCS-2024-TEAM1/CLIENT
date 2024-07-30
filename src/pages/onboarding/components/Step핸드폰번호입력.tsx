@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 
 import { ArrowLeftIc } from '../../../assets/svgs';
 import FullBtn from '../../../components/commons/FullBtn';
@@ -7,12 +8,14 @@ import Header from '../../../components/commons/Header';
 import Input from '../../../components/commons/Input';
 import Spacing from '../../../components/commons/Spacing';
 import Title from '../../../components/commons/Title';
+import { phoneNumberState } from '../../../states/phoneNumberState';
 import { usePostPhoneNumber } from '../hooks/queries';
 import { formatPhone } from '../utils/formatPhone';
 
 const Step핸드폰번호입력 = () => {
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState('');
+  const setPhoneNumberState = useSetRecoilState(phoneNumberState);
 
   const handleChangePhone = (e: ChangeEvent<HTMLInputElement>) => {
     const formattedNum = formatPhone(e.target.value);
@@ -27,14 +30,13 @@ const Step핸드폰번호입력 = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate('/onboarding/2', {
-        state: { phoneNumber },
-      });
+      navigate('/onboarding/2');
     }
-  }, [isSuccess, phoneNumber]);
+  }, [isSuccess]);
 
   const onClickGetAuthCode = () => {
     postPhoneNumber();
+    setPhoneNumberState(phoneNumber);
   };
 
   return (
