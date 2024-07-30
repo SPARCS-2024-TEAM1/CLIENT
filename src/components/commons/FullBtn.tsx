@@ -94,5 +94,5 @@ const Button = styled.button<{ $isBtnDisable: boolean; $btnColorType: string; $m
         : theme.colors.transparentW80};
   ${({ theme }) => theme.fonts.Body2_SB_18};
 
-  cursor: ${({ $isBtnDisable }) => ($isBtnDisable ? 'default' : 'cursor')};
+  cursor: ${({ $isBtnDisable }) => ($isBtnDisable ? 'default' : 'pointer')};
 `;

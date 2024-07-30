@@ -1,29 +1,31 @@
 import styled from '@emotion/styled';
-import React from 'react';
+
+import Spacing from '../../../components/commons/Spacing';
 
 interface BtnCloseModalPropType {
   title?: string;
   isModalOpen: boolean;
-  handleModalOpen: (type: boolean) => void;
-  handleBtnClick?: () => void;
+  leftBtnText: string;
+  rightBtnText: string;
+  handleLeftBtn: () => void;
+  handleRightBtn: () => void;
 }
 
 export const BtnCloseModal = (props: BtnCloseModalPropType) => {
-  const { title, isModalOpen, handleModalOpen } = props;
-
-  const handleModalClose = () => {
-    handleModalOpen(false);
-  };
+  const { title, isModalOpen, leftBtnText, rightBtnText, handleLeftBtn, handleRightBtn } = props;
 
   return (
     isModalOpen && (
       <Wrapper>
-        <ModalBackground $isModalOpen={isModalOpen} onClick={handleModalClose} />
+        <ModalBackground $isModalOpen={isModalOpen} />
         <BtnModalWrapper $isModalOpen={isModalOpen}>
+          <TempModalImg />
+          <Spacing marginBottom="1" />
           <BtnModalTitle>{title}</BtnModalTitle>
+
           <BtnWrapper>
-            <LeftBtn>초기화하기</LeftBtn>
-            <RightBtn>나가기</RightBtn>
+            <LeftBtn onClick={handleLeftBtn}>{leftBtnText}</LeftBtn>
+            <RightBtn onClick={handleRightBtn}>{rightBtnText}</RightBtn>
           </BtnWrapper>
         </BtnModalWrapper>
       </Wrapper>
@@ -54,16 +56,13 @@ const ModalBackground = styled.div<{ $isModalOpen: boolean }>`
 
   width: 100%;
   height: 100dvh;
-  margin-left: -2rem;
 
-  background-color: ${({ theme }) => theme.colors.grayScaleBg};
+  background-color: ${({ theme }) => theme.colors.transparentB75};
 `;
 
 const BtnModalWrapper = styled.section<{ $isModalOpen: boolean }>`
   display: ${({ $isModalOpen }) => ($isModalOpen ? 'flex' : 'none')};
   flex-direction: column;
-  gap: 1.8rem;
-  align-items: center;
   position: fixed;
   z-index: 5;
 
@@ -76,7 +75,9 @@ const BtnModalWrapper = styled.section<{ $isModalOpen: boolean }>`
 `;
 
 export const BtnModalTitle = styled.h2`
-  ${({ theme }) => theme.fonts.Head2_SB_30};
+  margin-bottom: 1.5rem;
+
+  ${({ theme }) => theme.fonts.Body2_SB_18};
   color: ${({ theme }) => theme.colors.grayScaleBg};
   text-align: center;
   white-space: pre-wrap;
@@ -85,6 +86,8 @@ export const BtnModalTitle = styled.h2`
 const BtnWrapper = styled.div`
   display: flex;
   gap: 0.8rem;
+
+  width: 100%;
 `;
 
 const LeftBtn = styled.button`
@@ -93,6 +96,7 @@ const LeftBtn = styled.button`
   align-items: center;
 
   width: 50%;
+  height: 4rem;
   border-radius: 4px;
 
   ${({ theme }) => theme.fonts.Title2_SB_16};
@@ -109,6 +113,7 @@ const RightBtn = styled.button`
   align-items: center;
 
   width: 50%;
+  height: 4rem;
   border-radius: 4px;
 
   ${({ theme }) => theme.fonts.Title2_SB_16};
@@ -117,4 +122,11 @@ const RightBtn = styled.button`
   color: ${({ theme }) => theme.colors.grayScaleWhite};
 
   cursor: pointer;
+`;
+
+const TempModalImg = styled.div`
+  width: 100%;
+  height: 12rem;
+
+  background-color: ${({ theme }) => theme.colors.key};
 `;
