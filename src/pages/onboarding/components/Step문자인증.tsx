@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useState, ChangeEvent, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { ArrowLeftIc, ClockIc } from '../../../assets/svgs';
 import FullBtn from '../../../components/commons/FullBtn';
@@ -8,11 +8,15 @@ import Header from '../../../components/commons/Header';
 import Input from '../../../components/commons/Input';
 import Spacing from '../../../components/commons/Spacing';
 import Title from '../../../components/commons/Title';
+import { usePostPhoneNumber } from '../hooks/queries';
 import { formatTime } from '../utils/formatTime';
 
 const Step문자인증 = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [authCode, setAuthCode] = useState('');
+
+  const { mutate: postPhoneNumber } = usePostPhoneNumber(location.state ? location.state.phoneNumber : '');
 
   // 서버 통신 후 맞는 인증코드인지 확인 필요
   const isValid = true;
@@ -41,7 +45,7 @@ const Step문자인증 = () => {
 
   // 재전송 클릭
   const onClickGetAuthCode = () => {
-    console.log('문자인증 api 연결');
+    postPhoneNumber();
     setTimeLeft(TIME);
   };
 

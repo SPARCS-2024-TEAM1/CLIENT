@@ -7,6 +7,7 @@ import Header from '../../../components/commons/Header';
 import Input from '../../../components/commons/Input';
 import Spacing from '../../../components/commons/Spacing';
 import Title from '../../../components/commons/Title';
+import { usePostPhoneNumber } from '../hooks/queries';
 import { formatPhone } from '../utils/formatPhone';
 
 const Step핸드폰번호입력 = () => {
@@ -18,13 +19,20 @@ const Step핸드폰번호입력 = () => {
     setPhoneNumber(formattedNum);
   };
 
+  const { mutate: postPhoneNumber, isSuccess } = usePostPhoneNumber(phoneNumber);
+
   const onClickBack = () => {
     navigate('/');
   };
 
   const onClickGetAuthCode = () => {
-    console.log('문자인증 api 연결');
-    navigate('/onboarding/2');
+    postPhoneNumber();
+    isSuccess &&
+      navigate('/onboarding/2', {
+        state: {
+          phoneNumber: phoneNumber,
+        },
+      });
   };
 
   return (

@@ -1,21 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
-// import { useMutation,useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
-import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
+import { postPhoneNumber } from '../apis/postPhoneNumber';
 
-export const QUERY_KEY_MAIN = {
-  getTempSaveContent: 'getTempSaveContent',
+export const QUERY_KEY_ONBOARDING = {
+  postPhoneNumber: 'postPhoneNumber',
 };
 
-// 임시저장 불러오기 GET
-export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) => {
-  const { data } = useQuery({
-    queryKey: [QUERY_KEY_MAIN.getTempSaveContent, postId],
-    queryFn: () => fetchTempSaveContent(postId),
-    enabled: !!isTempClicked,
+// 문자인증을 통한 회원가입 post
+export const usePostPhoneNumber = (phoneNumber: string) => {
+  const { mutate, isSuccess } = useMutation({
+    mutationKey: [QUERY_KEY_ONBOARDING.postPhoneNumber, phoneNumber],
+    mutationFn: () => postPhoneNumber(phoneNumber),
   });
 
-  const tempTopicList = data && data?.data?.topicList;
-
-  return { tempTopicList };
+  return { mutate, isSuccess };
 };
