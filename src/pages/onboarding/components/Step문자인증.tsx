@@ -8,18 +8,20 @@ import Header from '../../../components/commons/Header';
 import Input from '../../../components/commons/Input';
 import Spacing from '../../../components/commons/Spacing';
 import Title from '../../../components/commons/Title';
-import { usePostPhoneNumber } from '../hooks/queries';
+import { usePostPhoneNumber, usePostVerifyCode } from '../hooks/queries';
 import { formatTime } from '../utils/formatTime';
 
 const Step문자인증 = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [authCode, setAuthCode] = useState('');
+  const [isValid, setIsValid] = useState<boolean | null>(null);
 
   const { mutate: postPhoneNumber } = usePostPhoneNumber(location.state ? location.state.phoneNumber : '');
-
-  // 서버 통신 후 맞는 인증코드인지 확인 필요
-  const isValid = true;
+  const { mutate: postVerifyCode, data } = usePostVerifyCode({
+    phoneNumber: location.state ? location.state.phoneNumber : '',
+    verificationCode: authCode,
+  });
 
   const onClickBack = () => {
     navigate('/onboarding/1');
@@ -45,7 +47,7 @@ const Step문자인증 = () => {
 
   // 재전송 클릭
   const onClickGetAuthCode = () => {
-    postPhoneNumber();
+    postPhoneNumber(location.state ? location.state.phoneNumber : '');
     setTimeLeft(TIME);
   };
 
@@ -56,9 +58,21 @@ const Step문자인증 = () => {
 
   // 확인버튼
   const onClickCheckAuthCode = () => {
-    console.log('인증번호 맞는지 확인하는 api');
-    isValid && navigate('/onboarding/3');
+    postVerifyCode(
+      { phoneNumber: location.state ? location.state.phoneNumber : '', verificationCode: authCode },
+      {
+        onSuccess: () => {
+          setIsValid(true);
+          navigate('/onboarding/3');
+        },
+        onError: (error) => {
+          console.error('Error:', error);
+        },
+      },
+    );
   };
+
+  console.log(data);
 
   return (
     <>

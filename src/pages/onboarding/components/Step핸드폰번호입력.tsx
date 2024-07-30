@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ArrowLeftIc } from '../../../assets/svgs';
@@ -19,20 +19,31 @@ const Step핸드폰번호입력 = () => {
     setPhoneNumber(formattedNum);
   };
 
+  // const handleGetAuthCodeSuccess = () => {
+  //   console.log('first');
+  //   navigate('/onboarding/2', {
+  //     state: {
+  //       phoneNumber: phoneNumber,
+  //     },
+  //   });
+  // };
+
   const { mutate: postPhoneNumber, isSuccess } = usePostPhoneNumber(phoneNumber);
 
   const onClickBack = () => {
     navigate('/');
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('/onboarding/2', {
+        state: { phoneNumber },
+      });
+    }
+  }, [isSuccess, phoneNumber]);
+
   const onClickGetAuthCode = () => {
     postPhoneNumber();
-    isSuccess &&
-      navigate('/onboarding/2', {
-        state: {
-          phoneNumber: phoneNumber,
-        },
-      });
   };
 
   return (

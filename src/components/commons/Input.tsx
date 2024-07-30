@@ -21,7 +21,7 @@ const Input = (props: InputPropsType) => {
         $wordLimit={wordLimit !== 0}
         $isValid={isValid}
       />
-      {(wordLimit !== 0 || !isValid) && (
+      {(wordLimit !== 0 || (isValid !== null && !isValid)) && (
         <WarnText $wordLimit={inputVal.length > wordLimit} $isValid={isValid}>
           {wordLimit !== 0 ? (
             inputVal.length > wordLimit ? (
