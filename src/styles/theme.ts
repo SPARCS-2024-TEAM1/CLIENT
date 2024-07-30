@@ -23,6 +23,13 @@ export const theme = {
       line-height: 3.48rem;
       letter-spacing: -0.024rem;
     `,
+    Head2_SB_30: css`
+      font-family: 'Pretendard Variable', sans-serif;
+      font-size: 3rem;
+      font-weight: 600;
+      line-height: 4.35rem;
+      letter-spacing: -0.01rem;
+    `,
     Title1_SB_20: css`
       font-family: 'Pretendard Variable', sans-serif;
       font-size: 2rem;

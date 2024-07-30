@@ -5,3 +5,4 @@ export { default as ArrowLeftIc } from './ic_arrow_left.svg?react';
 export { default as ClockIc } from './ic_clock.svg?react';
 export { default as ArrowDownIc } from './ic_arrow_down.svg?react';
 export { default as ArrowUpIc } from './ic_arrow_up.svg?react';
+export { default as RestartIc } from './ic_restart.svg?react';
