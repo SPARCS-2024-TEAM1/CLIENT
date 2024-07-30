@@ -15,7 +15,7 @@ const Step문자인증 = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [authCode, setAuthCode] = useState('');
-  const [isValid, setIsValid] = useState<boolean | null>(null);
+  const [isValid, setIsValid] = useState<boolean | undefined>();
 
   const { mutate: postPhoneNumber } = usePostPhoneNumber(location.state ? location.state.phoneNumber : '');
   const {
