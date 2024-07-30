@@ -37,6 +37,8 @@ const Wrapper = styled.header`
   height: 5rem;
   margin-left: -2rem;
   padding: 1.6rem 2rem 0 1rem;
+
+  background-color: ${({ theme }) => theme.colors.grayScaleBg};
 `;
 
 const Title = styled.div`
