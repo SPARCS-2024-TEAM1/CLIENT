@@ -13,6 +13,7 @@ export const theme = {
     grayScaleB_Text: '#171717',
     transparentW80: 'rgba(255, 255, 255, 0.8)',
     transparentW40: 'rgba(243, 241, 234, 0.4)',
+    transparentB75: 'rgba(23, 23, 23, 0.75)',
   },
   fonts: {
     Head1_SB_24: css`

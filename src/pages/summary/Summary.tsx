@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import Loading from './components/Loading';
+import { AutoCloseModal } from './components/Modal';
 import { ArrowLeftIc } from '../../assets/svgs';
 import FullBtn from '../../components/commons/FullBtn';
 import Header from '../../components/commons/Header';
@@ -9,11 +12,35 @@ import Title from '../../components/commons/Title';
 
 const Summary = () => {
   const navigate = useNavigate();
+  const [onSuccess, setOnSuccess] = useState(true);
+
+  // axios 결과값 받아오기
+  const isLoading = true;
+  const handleShowModal = (type: boolean) => {
+    setOnSuccess(type);
+  };
 
   const onClickBack = () => {
     // url 바꿔야 함
-    navigate('/');
+    navigate('/character');
   };
+
+  if (isLoading) {
+    return (
+      <>
+        <Loading />
+        {onSuccess && (
+          <AutoCloseModal
+            text={`답장이 완성되었어요! \n읽으러 가볼까요?`}
+            showModal={onSuccess}
+            path="/reply"
+            handleShowModal={handleShowModal}>
+            <ModalImg />
+          </AutoCloseModal>
+        )}
+      </>
+    );
+  }
 
   return (
     <Wrapper>
@@ -150,4 +177,11 @@ const ButtonBg = styled.div`
     rgb(50 50 50 / 53.3%) 45.02%,
     #323232 70.06%
   );
+`;
+
+const ModalImg = styled.div`
+  width: 100%;
+  height: 16rem;
+
+  background-color: ${({ theme }) => theme.colors.key};
 `;

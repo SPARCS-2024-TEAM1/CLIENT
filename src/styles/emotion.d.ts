@@ -14,6 +14,7 @@ declare module '@emotion/react' {
       grayScaleB_Text: string;
       transparentW80: string;
       transparentW40: string;
+      transparentB75: string;
     };
     fonts: {
       Head1_SB_24: SerializedStyles;

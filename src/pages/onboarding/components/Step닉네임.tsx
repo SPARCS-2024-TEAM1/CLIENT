@@ -14,8 +14,7 @@ const Step닉네임 = () => {
   const [nickNameVal, setNickNameVal] = useState('');
 
   const onClickBack = () => {
-    // 뒤로가기 눌러서 어디로가는지 확인 필요
-    navigate('/onboarding/2');
+    navigate('/onboarding/1');
   };
 
   const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
