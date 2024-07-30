@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { saveAs } from 'file-saver';
+import html2canvas from 'html2canvas';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ReplyContainer from './components/ReplyContainer';
@@ -10,22 +12,39 @@ import TwoBtn from '../../components/commons/TwoBtn';
 const Reply = () => {
   const [isToggleOpen, setIsToggleOpen] = useState(true);
   const navigate = useNavigate();
+  const saveRef = useRef(null);
 
   const onClickToHome = () => {
     navigate('/main');
-  };
-  const onClickSaveImg = () => {
-    console.log('사진 저장 로직');
   };
 
   const onClickToggle = () => {
     setIsToggleOpen(!isToggleOpen);
   };
 
+  // 이미지 저장
+  const onClickSaveImg = async () => {
+    if (!saveRef.current) return;
+
+    try {
+      const img = saveRef.current;
+      const canvas = await html2canvas(img, { scale: 2 });
+      canvas.toBlob((blob) => {
+        if (blob !== null) {
+          saveAs(blob, 'reply.png');
+        }
+      });
+    } catch (err) {
+      console.error('이미지 저장 에러: ', err);
+    }
+  };
+
   return (
     <Wrapper $isToggleOpen={isToggleOpen}>
-      <ReplyImg />
-      <ReplyContainer isToggleOpen={isToggleOpen} onClickToggle={onClickToggle} />
+      <SaveImgWrapper ref={saveRef}>
+        <ReplyImg />
+        <ReplyContainer isToggleOpen={isToggleOpen} onClickToggle={onClickToggle} />
+      </SaveImgWrapper>
       <TwoBtn
         leftText="홈으로 가기"
         rightText="답장 사진 저장하기"
@@ -43,4 +62,11 @@ export default Reply;
 
 const Wrapper = styled.div<{ $isToggleOpen: boolean }>`
   padding: ${({ $isToggleOpen }) => ($isToggleOpen ? '0 0 17rem' : '')};
+`;
+
+const SaveImgWrapper = styled.div`
+  margin: 0 -2rem;
+  padding: 0 2rem 2rem;
+
+  background-color: ${({ theme }) => theme.colors.grayScaleBg};
 `;
