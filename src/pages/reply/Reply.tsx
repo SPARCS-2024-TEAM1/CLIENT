@@ -26,7 +26,6 @@ const Reply = () => {
     <Wrapper $isToggleOpen={isToggleOpen}>
       <ReplyImg />
       <ReplyContainer isToggleOpen={isToggleOpen} onClickToggle={onClickToggle} />
-
       <TwoBtn
         leftText="홈으로 가기"
         rightText="답장 사진 저장하기"

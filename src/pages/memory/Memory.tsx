@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import LastMemoryBox from './components/LastMemoryBox';
+import { MEMORY_LIST } from './constants/constants';
 import { ArrowLeftIc } from '../../assets/svgs';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
@@ -34,8 +36,20 @@ const Memory = () => {
         </MemoryType>
       </ListTypeWrapper>
       <Spacing marginBottom="3" />
-      <ReplyImg paddingTop={0} />
-      <ReplyContainer isToggleOpen={isToggleOpen} onClickToggle={onClickToggle} />
+      {memoryType === '오늘의 기록' && (
+        <>
+          <ReplyImg paddingTop={0} />
+          <ReplyContainer isToggleOpen={isToggleOpen} onClickToggle={onClickToggle} />
+        </>
+      )}
+      {memoryType === '지난 기록들' && (
+        // 서버에서 온 리스트로 map돌리기
+        <Container>
+          {MEMORY_LIST.map((memory) => (
+            <LastMemoryBox key={memory.id} date={memory.date} feeling={memory.feeling} />
+          ))}
+        </Container>
+      )}
     </Wrapper>
   );
 };
@@ -62,4 +76,12 @@ const MemoryType = styled.div<{ $isActive: boolean }>`
 
   ${({ theme }) => theme.fonts.Caption2_SB_14};
   cursor: pointer;
+`;
+
+const Container = styled.section`
+  display: grid;
+  gap: 1rem 0.7rem; /* 세로 간격 1rem, 가로 간격 0.7rem */
+
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(16.4rem, 1fr));
 `;
