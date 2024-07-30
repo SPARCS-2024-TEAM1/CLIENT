@@ -18,7 +18,11 @@ const Step문자인증 = () => {
   const [isValid, setIsValid] = useState<boolean | null>(null);
 
   const { mutate: postPhoneNumber } = usePostPhoneNumber(location.state ? location.state.phoneNumber : '');
-  const { mutate: postVerifyCode, data } = usePostVerifyCode({
+  const {
+    mutate: postVerifyCode,
+    data,
+    isSuccess,
+  } = usePostVerifyCode({
     phoneNumber: location.state ? location.state.phoneNumber : '',
     verificationCode: authCode,
   });
@@ -58,19 +62,15 @@ const Step문자인증 = () => {
 
   // 확인버튼
   const onClickCheckAuthCode = () => {
-    postVerifyCode(
-      { phoneNumber: location.state ? location.state.phoneNumber : '', verificationCode: authCode },
-      {
-        onSuccess: () => {
-          setIsValid(true);
-          navigate('/onboarding/3');
-        },
-        onError: (error) => {
-          console.error('Error:', error);
-        },
-      },
-    );
+    postVerifyCode();
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setIsValid(true);
+      navigate('/onboarding/3');
+    }
+  }, [isSuccess]);
 
   console.log(data);
 

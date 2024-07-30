@@ -27,8 +27,7 @@ interface postVerifyCodeType {
 export const usePostVerifyCode = ({ phoneNumber, verificationCode }: postVerifyCodeType) => {
   const { mutate, data, isSuccess } = useMutation({
     mutationKey: [QUERY_KEY_ONBOARDING.postVerifyCode, phoneNumber, verificationCode],
-    mutationFn: ({ phoneNumber, verificationCode }: postVerifyCodeType) =>
-      postVerifyCode({ phoneNumber, verificationCode }),
+    mutationFn: () => postVerifyCode({ phoneNumber, verificationCode }),
   });
 
   return { mutate, data, isSuccess };
