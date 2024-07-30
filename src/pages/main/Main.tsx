@@ -13,7 +13,7 @@ const Main = () => {
   };
 
   const onClickPastFeeling = () => {
-    navigate('/list');
+    navigate('/memory');
   };
   return (
     <>
