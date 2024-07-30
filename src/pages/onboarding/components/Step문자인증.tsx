@@ -14,6 +14,9 @@ const Step문자인증 = () => {
   const navigate = useNavigate();
   const [authCode, setAuthCode] = useState('');
 
+  // 서버 통신 후 맞는 인증코드인지 확인 필요
+  const isValid = true;
+
   const onClickBack = () => {
     navigate('/onboarding/1');
   };
@@ -50,7 +53,7 @@ const Step문자인증 = () => {
   // 확인버튼
   const onClickCheckAuthCode = () => {
     console.log('인증번호 맞는지 확인하는 api');
-    navigate('/onboarding/3');
+    isValid && navigate('/onboarding/3');
   };
 
   return (
@@ -67,7 +70,7 @@ const Step문자인증 = () => {
         </Timer>
       </TimerContainer>
       <Spacing marginBottom="2.3" />
-      <Input placeholder="인증번호 6자리" inputVal={authCode} handleInputVal={handleChangeAuthCode} />
+      <Input placeholder="인증번호 6자리" inputVal={authCode} handleInputVal={handleChangeAuthCode} isValid={isValid} />
       <Spacing marginBottom="2.943" />
       <FullBtn
         activeText="확인"
