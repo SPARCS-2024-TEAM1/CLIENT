@@ -43,6 +43,7 @@ const RecordToday = () => {
     navigate('/character');
   };
 
+  // 초기화하기 눌렀을 때
   // 뒤로가기 누르고 모달 열린 후 초기화하기(왼쪽 버튼) 눌렀을 경우
   // 시간 다 됐을 때 열린 모달 다시할게요(왼쪽버튼) 눌렀을 경우
   // 사용자가 제출눌렀을 때 뜨는 모달 다시할게요 (왼쪽버튼) 눌렀을 경우
@@ -218,7 +219,7 @@ const RecordToday = () => {
         <RecordTempImg />
         <Timer>{`00:${timeLeft < 10 ? `0${timeLeft}` : timeLeft}`}</Timer>
         <Spacing marginBottom="3.215" />
-        <ResetDiv>
+        <ResetDiv onClick={onClickResetBtn}>
           <RestartIc />
           <ResetText>초기화하기</ResetText>
         </ResetDiv>
@@ -229,7 +230,7 @@ const RecordToday = () => {
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       {/* <audio controls src={serverAudio || undefined}></audio>   */}
       <DownWrapper>
-        <Button type="button" onClick={onRec ? onRecAudio : offRecAudio}>
+        <Button type="button" onClick={isStart ? (onRec ? onRecAudio : offRecAudio) : onClickStart}>
           {isStart ? '완료' : '시작하기'}
         </Button>
       </DownWrapper>
