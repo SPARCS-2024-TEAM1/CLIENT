@@ -21,6 +21,7 @@ const Memory = () => {
   };
 
   const onClickMemoryBox = (id: string) => {
+    // location으로 데이터 같이 전달 필요
     navigate(`/memory/${id}`);
   };
 
