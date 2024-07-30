@@ -1,3 +1,5 @@
+// 핸드폰번호 입력해서 인증번호 받기 post
+
 import { client } from '../../../utils/apis/axios';
 
 export const postPhoneNumber = async (phoneNumber: string) => {

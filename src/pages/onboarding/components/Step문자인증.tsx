@@ -68,7 +68,9 @@ const Step문자인증 = () => {
   useEffect(() => {
     if (isSuccess) {
       setIsValid(true);
-      navigate('/onboarding/3');
+      navigate('/onboarding/3', {
+        state: { phoneNumber: location.state ? location.state.phoneNumber : '' },
+      });
     }
   }, [isSuccess]);
 

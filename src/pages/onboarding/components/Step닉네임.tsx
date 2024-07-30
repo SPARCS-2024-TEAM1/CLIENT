@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { useState, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, ChangeEvent, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { ArrowLeftIc } from '../../../assets/svgs';
 import FullBtn from '../../../components/commons/FullBtn';
@@ -8,10 +8,21 @@ import Header from '../../../components/commons/Header';
 import Input from '../../../components/commons/Input';
 import Spacing from '../../../components/commons/Spacing';
 import Title from '../../../components/commons/Title';
+import { usePostSignup } from '../hooks/queries';
 
 const Step닉네임 = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [nickNameVal, setNickNameVal] = useState('');
+
+  const {
+    mutate: postSignup,
+    data,
+    isSuccess,
+  } = usePostSignup({
+    nickname: nickNameVal,
+    phoneNumber: location.state ? location.state.phoneNumber : '',
+  });
 
   const onClickBack = () => {
     navigate('/onboarding/1');
@@ -22,9 +33,16 @@ const Step닉네임 = () => {
   };
 
   const onClickNicknameSubmit = () => {
-    console.log('닉네임 post api 혹은 저장');
-    navigate('/main');
+    postSignup();
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('/main');
+    }
+  }, [isSuccess]);
+
+  console.log(data);
 
   return (
     <>

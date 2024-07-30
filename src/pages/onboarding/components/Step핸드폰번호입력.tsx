@@ -19,15 +19,6 @@ const Step핸드폰번호입력 = () => {
     setPhoneNumber(formattedNum);
   };
 
-  // const handleGetAuthCodeSuccess = () => {
-  //   console.log('first');
-  //   navigate('/onboarding/2', {
-  //     state: {
-  //       phoneNumber: phoneNumber,
-  //     },
-  //   });
-  // };
-
   const { mutate: postPhoneNumber, isSuccess } = usePostPhoneNumber(phoneNumber);
 
   const onClickBack = () => {

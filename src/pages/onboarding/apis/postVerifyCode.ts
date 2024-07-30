@@ -1,3 +1,5 @@
+// 인증번호 확인 post
+
 import { client } from '../../../utils/apis/axios';
 
 interface postVerifyCodeType {
