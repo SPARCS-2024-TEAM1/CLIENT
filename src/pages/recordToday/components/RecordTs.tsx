@@ -78,6 +78,8 @@ const AudioRecord = () => {
     }
   }, [audioUrl]);
 
+  console.log(serverAudio);
+
   return (
     <>
       <button onClick={onRec ? onRecAudio : offRecAudio}>녹음</button>
