@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CharacterChoose from './pages/charcterChoose/CharacterChoose';
 import Home from './pages/home/Home';
 import Main from './pages/main/Main';
+import LastMemory from './pages/memory/LastMemory';
 import Memory from './pages/memory/Memory';
 import Step닉네임 from './pages/onboarding/components/Step닉네임';
 import Step문자인증 from './pages/onboarding/components/Step문자인증';
@@ -26,6 +27,7 @@ const Router = () => {
         <Route path="/summary" element={<Summary />} />
         <Route path="/reply" element={<Reply />} />
         <Route path="/memory" element={<Memory />} />
+        <Route path="/memory/:memoryId" element={<LastMemory />} />
       </Routes>
     </BrowserRouter>
   );

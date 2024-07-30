@@ -1,14 +1,16 @@
 import styled from '@emotion/styled';
 
 interface LastMemoryBoxPropsType {
+  id: number;
   date: string;
   feeling: string;
+  onClick: () => void;
 }
 
 const LastMemoryBox = (props: LastMemoryBoxPropsType) => {
-  const { date, feeling } = props;
+  const { date, feeling, onClick } = props;
   return (
-    <Wrapper>
+    <Wrapper onClick={() => onClick()}>
       <Date>{date}</Date>
       <Feeling>{feeling}</Feeling>
     </Wrapper>

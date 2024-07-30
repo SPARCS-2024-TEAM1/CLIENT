@@ -20,6 +20,10 @@ const Memory = () => {
     navigate('/main');
   };
 
+  const onClickMemoryBox = (id: string) => {
+    navigate(`/memory/${id}`);
+  };
+
   const onClickToggle = () => {
     setIsToggleOpen(!isToggleOpen);
   };
@@ -46,7 +50,13 @@ const Memory = () => {
         // 서버에서 온 리스트로 map돌리기
         <Container>
           {MEMORY_LIST.map((memory) => (
-            <LastMemoryBox key={memory.id} date={memory.date} feeling={memory.feeling} />
+            <LastMemoryBox
+              key={memory.id}
+              id={memory.id}
+              date={memory.date}
+              feeling={memory.feeling}
+              onClick={() => onClickMemoryBox(memory.id + '')}
+            />
           ))}
         </Container>
       )}
