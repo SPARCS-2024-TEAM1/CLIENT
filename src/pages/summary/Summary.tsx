@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Loading from './components/Loading';
 import { AutoCloseModal } from './components/Modal';
 import { ArrowLeftIc } from '../../assets/svgs';
+import ButtonBg from '../../components/commons/ButtonBg';
 import FullBtn from '../../components/commons/FullBtn';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
@@ -156,24 +157,6 @@ const Content = styled.li`
   color: ${({ theme }) => theme.colors.grayScaleB_Text};
   text-indent: -2rem;
   ${({ theme }) => theme.fonts.Body3_M_14};
-`;
-
-const ButtonBg = styled.div`
-  position: fixed;
-  bottom: 0;
-  z-index: 2;
-
-  width: 100%;
-  height: 16rem;
-  margin-left: -2rem;
-
-  background: linear-gradient(
-    180deg,
-    rgb(50 50 50 / 0%) 19.98%,
-    rgb(50 50 50 / 10%) 29.99%,
-    rgb(50 50 50 / 53.3%) 45.02%,
-    #323232 70.06%
-  );
 `;
 
 const ModalImg = styled.div`

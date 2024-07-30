@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   gap: 1.1rem;
   position: fixed;
   bottom: 0;
+  z-index: 3;
 
   width: 100%;
   margin-bottom: 3.6rem;
@@ -51,6 +52,6 @@ const Button = styled.button<{ $active: boolean }>`
 
   color: ${({ $active, theme }) => ($active ? theme.colors.grayScaleBg : theme.colors.transparentW80)};
 
-  ${({ theme }) => theme.fonts.Body3_M_14};
+  ${({ theme }) => theme.fonts.Title2_SB_16};
   cursor: pointer;
 `;

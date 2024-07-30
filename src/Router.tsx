@@ -6,6 +6,7 @@ import Main from './pages/main/Main';
 import Step닉네임 from './pages/onboarding/components/Step닉네임';
 import Step문자인증 from './pages/onboarding/components/Step문자인증';
 import Step핸드폰번호입력 from './pages/onboarding/components/Step핸드폰번호입력';
+import Reply from './pages/reply/Reply';
 import Summary from './pages/summary/Summary';
 import TodayFeeling from './pages/todayFeeling/TodayFeeling';
 
@@ -22,6 +23,7 @@ const Router = () => {
         <Route path="/character" element={<CharacterChoose />} />
         <Route path="/record" element={<CharacterChoose />} />
         <Route path="/summary" element={<Summary />} />
+        <Route path="/reply" element={<Reply />} />
       </Routes>
     </BrowserRouter>
   );
