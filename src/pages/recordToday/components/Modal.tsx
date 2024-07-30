@@ -9,7 +9,7 @@ interface BtnCloseModalPropType {
 }
 
 export const BtnCloseModal = (props: BtnCloseModalPropType) => {
-  const { title, isModalOpen, handleModalOpen, handleBtnClick } = props;
+  const { title, isModalOpen, handleModalOpen } = props;
 
   const handleModalClose = () => {
     handleModalOpen(false);
