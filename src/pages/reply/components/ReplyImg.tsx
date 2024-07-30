@@ -1,8 +1,13 @@
 import styled from '@emotion/styled';
 
-const ReplyImg = () => {
+interface ReplyImgPropType {
+  paddingTop?: number;
+}
+
+const ReplyImg = (props: ReplyImgPropType) => {
+  const { paddingTop = 5.6 } = props;
   return (
-    <ReplyImgTempContainer>
+    <ReplyImgTempContainer $paddingTop={paddingTop}>
       <ReplyTempImg />
       <ReplyTempVideo />
     </ReplyImgTempContainer>
@@ -11,12 +16,12 @@ const ReplyImg = () => {
 
 export default ReplyImg;
 
-const ReplyImgTempContainer = styled.div`
+const ReplyImgTempContainer = styled.div<{ $paddingTop: number }>`
   display: flex;
   gap: 0.9rem;
 
   width: 100%;
-  padding-top: 5.6rem;
+  padding-top: ${({ $paddingTop }) => `${$paddingTop}rem`};
 `;
 
 const ReplyTempImg = styled.div`

@@ -5,9 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeftIc } from '../../assets/svgs';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
+import ReplyContainer from '../reply/components/ReplyContainer';
+import ReplyImg from '../reply/components/ReplyImg';
 
 const Memory = () => {
   const navigate = useNavigate();
+  const [isToggleOpen, setIsToggleOpen] = useState(false);
   const [memoryType, setMemoryType] = useState('오늘의 기록');
 
   const onClickBack = () => {
@@ -15,8 +18,12 @@ const Memory = () => {
     navigate('/main');
   };
 
+  const onClickToggle = () => {
+    setIsToggleOpen(!isToggleOpen);
+  };
+
   return (
-    <>
+    <Wrapper $isToggleOpen={isToggleOpen}>
       <Header LeftSvg={ArrowLeftIc} onClickLeft={onClickBack} title="지난 감정 기록" />
       <ListTypeWrapper>
         <MemoryType $isActive={memoryType === '오늘의 기록'} onClick={() => setMemoryType('오늘의 기록')}>
@@ -27,15 +34,17 @@ const Memory = () => {
         </MemoryType>
       </ListTypeWrapper>
       <Spacing marginBottom="3" />
-      <ReplyImgTempContainer>
-        <ReplyTempImg />
-        <ReplyTempVideo />
-      </ReplyImgTempContainer>
-    </>
+      <ReplyImg paddingTop={0} />
+      <ReplyContainer isToggleOpen={isToggleOpen} onClickToggle={onClickToggle} />
+    </Wrapper>
   );
 };
 
 export default Memory;
+
+const Wrapper = styled.div<{ $isToggleOpen: boolean }>`
+  padding: ${({ $isToggleOpen }) => ($isToggleOpen ? '0 0 4rem' : '')};
+`;
 
 const ListTypeWrapper = styled.div`
   display: flex;
@@ -53,25 +62,4 @@ const MemoryType = styled.div<{ $isActive: boolean }>`
 
   ${({ theme }) => theme.fonts.Caption2_SB_14};
   cursor: pointer;
-`;
-
-const ReplyImgTempContainer = styled.div`
-  display: flex;
-  gap: 0.9rem;
-
-  width: 100%;
-  padding-top: 5.6rem;
-`;
-
-const ReplyTempImg = styled.div`
-  width: 19.4rem;
-
-  background-color: ${({ theme }) => theme.colors.key};
-`;
-
-const ReplyTempVideo = styled.div`
-  width: 13.2rem;
-  height: 11.4rem;
-
-  background-color: ${({ theme }) => theme.colors.key};
 `;
