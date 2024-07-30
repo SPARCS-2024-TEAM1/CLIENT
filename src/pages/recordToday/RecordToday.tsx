@@ -24,6 +24,7 @@ const RecordToday = () => {
   const [analyser, setAnalyser] = useState<ScriptProcessorNode | null>(null);
   const [audioUrl, setAudioUrl] = useState<Blob | null>(null);
   const [serverAudio, setServerAudio] = useState<string | null>(null);
+  const [serverAudioFile, setServerAudioFile] = useState<File | null>(null);
 
   // 뒤로가기 눌렀을 때 열리는 모달
   const onClickBack = () => {
@@ -198,8 +199,9 @@ const RecordToday = () => {
 
     if (audioUrl) {
       const sound = new File([audioUrl], 'soundBlob', { lastModified: new Date().getTime(), type: 'audio' });
+      // 파일 저장 필요
+      setServerAudioFile(sound);
       console.log(sound);
-      console.log('vv');
     }
   }, [audioUrl]);
 
