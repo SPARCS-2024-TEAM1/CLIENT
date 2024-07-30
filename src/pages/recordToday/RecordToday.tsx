@@ -25,6 +25,7 @@ const RecordToday = () => {
   const [audioUrl, setAudioUrl] = useState<Blob | null>(null);
   const [serverAudio, setServerAudio] = useState<string | null>(null);
   const [serverAudioFile, setServerAudioFile] = useState<File | null>(null);
+  console.log(serverAudioFile);
 
   // 뒤로가기 눌렀을 때 열리는 모달
   const onClickBack = () => {

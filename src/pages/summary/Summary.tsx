@@ -77,6 +77,7 @@ const Summary = () => {
           </Content>
         </ContentWrapper>
       </SummaryWrapper>
+      {/* api쏘는 함수 연결 필요 */}
       <FullBtn activeText="00에게 답장받기" btnColorType="gray" isBtnDisable={false} />
       <ButtonBg />
     </Wrapper>

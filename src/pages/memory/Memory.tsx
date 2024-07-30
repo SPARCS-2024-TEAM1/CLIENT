@@ -12,11 +12,11 @@ import ReplyImg from '../reply/components/ReplyImg';
 
 const Memory = () => {
   const navigate = useNavigate();
-  const [isToggleOpen, setIsToggleOpen] = useState(false);
+  const [isToggleOpen, setIsToggleOpen] = useState(true);
   const [memoryType, setMemoryType] = useState('오늘의 기록');
 
   // 서버에서 받아온 지난 기록 리스트 필요
-  const length = 0;
+  const length = 1;
 
   const onClickBack = () => {
     navigate('/main');

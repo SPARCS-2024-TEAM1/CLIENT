@@ -10,7 +10,7 @@ import ReplyImg from '../reply/components/ReplyImg';
 
 const LastMemory = () => {
   const navigate = useNavigate();
-  const [isToggleOpen, setIsToggleOpen] = useState(false);
+  const [isToggleOpen, setIsToggleOpen] = useState(true);
 
   const onClickToggle = () => {
     setIsToggleOpen(!isToggleOpen);

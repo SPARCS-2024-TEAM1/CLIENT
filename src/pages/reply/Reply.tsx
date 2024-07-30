@@ -8,7 +8,7 @@ import ButtonBg from '../../components/commons/ButtonBg';
 import TwoBtn from '../../components/commons/TwoBtn';
 
 const Reply = () => {
-  const [isToggleOpen, setIsToggleOpen] = useState(false);
+  const [isToggleOpen, setIsToggleOpen] = useState(true);
   const navigate = useNavigate();
 
   const onClickToHome = () => {
