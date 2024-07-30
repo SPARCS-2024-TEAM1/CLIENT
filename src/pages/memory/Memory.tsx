@@ -15,8 +15,10 @@ const Memory = () => {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
   const [memoryType, setMemoryType] = useState('오늘의 기록');
 
+  // 서버에서 받아온 지난 기록 리스트 필요
+  const length = 0;
+
   const onClickBack = () => {
-    // 어디로 가는지 확인 해야함
     navigate('/main');
   };
 
@@ -27,6 +29,11 @@ const Memory = () => {
 
   const onClickToggle = () => {
     setIsToggleOpen(!isToggleOpen);
+  };
+
+  const onClickEmptyText = () => {
+    // 어디로 가는지 확인 해야함
+    navigate('/todayFeeling');
   };
 
   return (
@@ -41,25 +48,33 @@ const Memory = () => {
         </MemoryType>
       </ListTypeWrapper>
       <Spacing marginBottom="3" />
-      {memoryType === '오늘의 기록' && (
+      {length ? (
         <>
-          <ReplyImg paddingTop={0} />
-          <ReplyContainer isToggleOpen={isToggleOpen} onClickToggle={onClickToggle} />
+          {memoryType === '오늘의 기록' && (
+            <>
+              <ReplyImg paddingTop={0} />
+              <ReplyContainer isToggleOpen={isToggleOpen} onClickToggle={onClickToggle} />
+            </>
+          )}
+          {memoryType === '지난 기록들' && (
+            // 서버에서 온 리스트로 map돌리기
+            <Container>
+              {MEMORY_LIST.map((memory) => (
+                <LastMemoryBox
+                  key={memory.id}
+                  id={memory.id}
+                  date={memory.date}
+                  feeling={memory.feeling}
+                  onClick={() => onClickMemoryBox(memory.id + '')}
+                />
+              ))}
+            </Container>
+          )}
         </>
-      )}
-      {memoryType === '지난 기록들' && (
-        // 서버에서 온 리스트로 map돌리기
-        <Container>
-          {MEMORY_LIST.map((memory) => (
-            <LastMemoryBox
-              key={memory.id}
-              id={memory.id}
-              date={memory.date}
-              feeling={memory.feeling}
-              onClick={() => onClickMemoryBox(memory.id + '')}
-            />
-          ))}
-        </Container>
+      ) : (
+        <EmptyImg>
+          <EmptyText onClick={onClickEmptyText}>감정 기록하러 가볼까요?</EmptyText>
+        </EmptyImg>
       )}
     </Wrapper>
   );
@@ -95,4 +110,30 @@ const Container = styled.section`
 
   width: 100%;
   grid-template-columns: repeat(auto-fill, minmax(16.4rem, 1fr));
+`;
+
+const EmptyImg = styled.div`
+  position: relative;
+
+  width: 33.5rem;
+  height: 18rem;
+
+  background-color: ${({ theme }) => theme.colors.key};
+`;
+
+const EmptyText = styled.span`
+  position: absolute;
+  right: 9.05rem;
+  bottom: 1.546rem;
+
+  height: 3rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+
+  background-color: ${({ theme }) => theme.colors.grayScaleB_Text};
+
+  color: ${({ theme }) => theme.colors.grayScaleLg};
+
+  ${({ theme }) => theme.fonts.Caption2_SB_14};
+  cursor: pointer;
 `;
