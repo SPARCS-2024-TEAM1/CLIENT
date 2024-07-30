@@ -51,6 +51,13 @@ export const theme = {
       line-height: 2.52rem;
       letter-spacing: -0.018rem;
     `,
+    Body3_M_14: css`
+      font-family: 'Pretendard Variable', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 2.17rem;
+      letter-spacing: -0.014rem;
+    `,
     Caption1_M_12: css`
       font-family: 'Pretendard Variable', sans-serif;
       font-size: 1.2rem;
@@ -58,11 +65,11 @@ export const theme = {
       line-height: 1.74rem;
       letter-spacing: -0.012rem;
     `,
-    Body3_M_14: css`
+    Caption2_SB_14: css`
       font-family: 'Pretendard Variable', sans-serif;
       font-size: 1.4rem;
-      font-weight: 500;
-      line-height: 2.17rem;
+      font-weight: 600;
+      line-height: 2.03rem;
       letter-spacing: -0.014rem;
     `,
   },

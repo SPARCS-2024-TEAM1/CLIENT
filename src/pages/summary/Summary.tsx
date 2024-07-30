@@ -15,7 +15,7 @@ const Summary = () => {
   const [onSuccess, setOnSuccess] = useState(true);
 
   // axios 결과값 받아오기
-  const isLoading = true;
+  const isLoading = false;
   const handleShowModal = (type: boolean) => {
     setOnSuccess(type);
   };
@@ -103,8 +103,7 @@ const DateChip = styled.div`
 
   color: ${({ theme }) => theme.colors.grayScaleBg};
 
-  /* 폰트 확인 후 변경 필요 */
-  ${({ theme }) => theme.fonts.Body3_M_14};
+  ${({ theme }) => theme.fonts.Caption2_SB_14};
 `;
 
 const TempSumDiv = styled.section`
@@ -116,7 +115,6 @@ const TempSumDiv = styled.section`
 
   background-color: ${({ theme }) => theme.colors.key};
 
-  /* 폰트 확인 후 변경 필요 */
   ${({ theme }) => theme.fonts.Title2_SB_16};
 `;
 
@@ -139,8 +137,7 @@ const SummaryTitle = styled.p`
 
   color: ${({ theme }) => theme.colors.grayScaleB_Text};
 
-  /* 폰트 확인 후 변경 필요 */
-  ${({ theme }) => theme.fonts.Title1_SB_20};
+  ${({ theme }) => theme.fonts.Title2_SB_16};
 `;
 
 const ContentWrapper = styled.ul`
