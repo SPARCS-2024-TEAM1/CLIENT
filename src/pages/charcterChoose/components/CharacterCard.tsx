@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import { ReplyDgIc, ReplyPjIc } from '../../../assets/svgs';
+
 interface CharacterCardPropsType {
   id: number;
   name: string;
@@ -18,6 +20,7 @@ const CharacterCard = (props: CharacterCardPropsType) => {
       onClick={() => onClick(id, name)}
       $isCharClicked={selectedChar !== ''}
       $isSelected={characterList[id]}>
+      {name === '동글이' ? <ReplyDgIc /> : <ReplyPjIc />}
       <NameChipDiv>
         <Name>{name}</Name>
         {chipList.map((chip) => (
@@ -34,14 +37,10 @@ export default CharacterCard;
 const Wrapper = styled.button<{ $isCharClicked: boolean; $isSelected: boolean }>`
   display: flex;
   flex-direction: column;
+  position: relative;
 
-  width: 100%;
-  height: 10.6rem;
-  padding: 1.5rem 0 0.9rem 2rem;
+  padding: 0;
   border-radius: 4px;
-
-  /* 배경색 변경 필요 */
-  background-color: ${({ theme }) => theme.colors.grayScaleW_bg};
 
   opacity: ${({ $isSelected, $isCharClicked }) => ($isCharClicked ? ($isSelected ? '' : '10%') : '')};
 `;
@@ -50,6 +49,9 @@ const NameChipDiv = styled.div`
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  position: absolute;
+  top: 1.5rem;
+  left: 2rem;
 
   margin-bottom: 1.2rem;
 `;
@@ -70,6 +72,10 @@ const Chip = styled.div`
 `;
 
 const Description = styled.div`
+  position: absolute;
+  top: 4.7rem;
+  left: 2rem;
+
   color: ${({ theme }) => theme.colors.grayScaleB_Text};
   ${({ theme }) => theme.fonts.Body3_M_14};
   text-align: left;
