@@ -14,5 +14,8 @@ export const usePostTodayFeeling = () => {
       postTodayFeeling({ memberId, mood, assistant, file }),
   });
 
-  return { mutate, isSuccess, data };
+  const moodDiaryId = data?.data?.moodDiaryId;
+  const summary = data?.data?.summary;
+
+  return { mutate, isSuccess, data, moodDiaryId, summary };
 };

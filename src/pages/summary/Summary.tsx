@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import Loading from './components/Loading';
@@ -17,9 +17,13 @@ import { userState } from '../../states/userState';
 
 const Summary = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [onSuccess, setOnSuccess] = useState(true);
   const user = useRecoilValue(userState);
   const character = useRecoilValue(characterState);
+
+  const summary = location.state.summary;
+  const SUMMARY_LIST = summary.split('\n').map((text: string) => text.replace(/^- /, ''));
 
   // axios 결과값 받아오기
   const isLoading = false;
@@ -64,22 +68,9 @@ const Summary = () => {
         <SummaryTitle>오늘 하루 이런 일들이 있으셨네요</SummaryTitle>
         {/* 실제 데이터로 연결 필요 */}
         <ContentWrapper>
-          <Content>
-            다음 달 1일부터 00 등 소주 제품 공장 출고가격이 인상된다. - 공장 출고가 이렇게 인상되면서 소매점과 식당의
-            가격인상이 불가피해질 전망이다.
-          </Content>
-          <Content>
-            주류업계에서는 000 소주 출고가가 65.5원 오르면 대형할인점 등에서는 소매 가격을 100원 안팎 올릴 것으로 보고
-            있다.
-          </Content>
-          <Content>
-            주류업계에서는 000 소주 출고가가 65.5원 오르면 대형할인점 등에서는 소매 가격을 100원 안팎 올릴 것으로 보고
-            있다.
-          </Content>
-          <Content>
-            주류업계에서는 000 소주 출고가가 65.5원 오르면 대형할인점 등에서는 소매 가격을 100원 안팎 올릴 것으로 보고
-            있다.
-          </Content>
+          {SUMMARY_LIST.map((sentence: string) => (
+            <Content key={Math.random().toString(36).slice(2, 11)}>{sentence}</Content>
+          ))}
         </ContentWrapper>
         <SummaryIcon />
       </SummaryWrapper>

@@ -2,7 +2,7 @@
 import styled from '@emotion/styled';
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { BtnCloseModal } from './components/Modal';
 import { usePostTodayFeeling } from './hooks/queries';
@@ -12,6 +12,7 @@ import Spacing from '../../components/commons/Spacing';
 import Title from '../../components/commons/Title';
 import { characterState } from '../../states/characterState';
 import { moodState } from '../../states/moodState';
+import { todayMoodDiaryIdState } from '../../states/todayMoodDiaryIdState';
 import { userState } from '../../states/userState';
 
 const RecordToday = () => {
@@ -24,6 +25,7 @@ const RecordToday = () => {
   const character = useRecoilValue(characterState);
   const user = useRecoilValue(userState);
   const mood = useRecoilValue(moodState);
+  const setTodayMoodDiaryId = useSetRecoilState(todayMoodDiaryIdState);
 
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [media, setMedia] = useState<MediaRecorder | null>(null);
@@ -34,7 +36,7 @@ const RecordToday = () => {
   const [audioUrl, setAudioUrl] = useState<Blob | null>(null);
   const [serverAudio, setServerAudio] = useState<string | null>(null);
 
-  const { mutate: postTodayFeeling, isSuccess } = usePostTodayFeeling();
+  const { mutate: postTodayFeeling, isSuccess, moodDiaryId, summary } = usePostTodayFeeling();
   console.log(onRec);
   // 뒤로가기 눌렀을 때 열리는 모달
   const onClickBack = () => {
@@ -87,7 +89,12 @@ const RecordToday = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate('/summary');
+      setTodayMoodDiaryId(moodDiaryId);
+      navigate('/summary', {
+        state: {
+          summary: summary,
+        },
+      });
     }
   }, [isSuccess]);
 
