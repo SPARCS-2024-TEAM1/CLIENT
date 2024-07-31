@@ -87,7 +87,7 @@ const RecordToday = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      // navigate('/summary');
+      navigate('/summary');
     }
   }, [isSuccess]);
 

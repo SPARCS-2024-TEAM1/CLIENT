@@ -31,3 +31,14 @@ export { default as ModalDoneIc } from './img_modal_done.svg?react';
 export { default as ModalStopIc } from './img_modal_stop.svg?react';
 
 export { default as SummaryIc } from './img_summary.svg?react';
+
+// 기분 목록
+export { default as RecordAngerIc } from './img_record_anger.svg?react';
+export { default as RecordAnxietyIc } from './img_record_anxiety.svg?react';
+export { default as RecordCalmnessIc } from './img_record_calmness.svg?react';
+export { default as RecordFatigueIc } from './img_record_fatigue.svg?react';
+export { default as RecordGratitudeIc } from './img_record_gratitude.svg?react';
+export { default as RecordJoyIc } from './img_record_joy.svg?react';
+export { default as RecordLonelinessIc } from './img_record_loneliness.svg?react';
+export { default as RecordSadnessIc } from './img_record_sadness.svg?react';
+export { default as RecordStressIc } from './img_record_stress.svg?react';
