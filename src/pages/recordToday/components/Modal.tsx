@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 
+import { ModalStopIc, ModalCutIc, ModalDoneIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
 
 interface BtnCloseModalPropType {
+  type: string;
   title?: string;
   isModalOpen: boolean;
   leftBtnText: string;
@@ -12,14 +14,16 @@ interface BtnCloseModalPropType {
 }
 
 export const BtnCloseModal = (props: BtnCloseModalPropType) => {
-  const { title, isModalOpen, leftBtnText, rightBtnText, handleLeftBtn, handleRightBtn } = props;
+  const { type, title, isModalOpen, leftBtnText, rightBtnText, handleLeftBtn, handleRightBtn } = props;
 
   return (
     isModalOpen && (
       <Wrapper>
         <ModalBackground $isModalOpen={isModalOpen} />
         <BtnModalWrapper $isModalOpen={isModalOpen}>
-          <TempModalImg />
+          {type === 'back' && <ModalStopIcon />}
+          {type === 'timeOut' && <ModalDoneIcon />}
+          {type === 'submit' && <ModalCutIcon />}
           <Spacing marginBottom="1" />
           <BtnModalTitle>{title}</BtnModalTitle>
 
@@ -32,6 +36,19 @@ export const BtnCloseModal = (props: BtnCloseModalPropType) => {
     )
   );
 };
+
+const ModalStopIcon = styled(ModalStopIc)`
+  width: 100%;
+  height: 100%;
+`;
+const ModalCutIcon = styled(ModalCutIc)`
+  width: 100%;
+  height: 100%;
+`;
+const ModalDoneIcon = styled(ModalDoneIc)`
+  width: 100%;
+  height: 100%;
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -122,11 +139,4 @@ const RightBtn = styled.button`
   color: ${({ theme }) => theme.colors.grayScaleWhite};
 
   cursor: pointer;
-`;
-
-const TempModalImg = styled.div`
-  width: 100%;
-  height: 12rem;
-
-  background-color: ${({ theme }) => theme.colors.key};
 `;

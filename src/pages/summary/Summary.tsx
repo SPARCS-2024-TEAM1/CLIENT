@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import Loading from './components/Loading';
 import { AutoCloseModal } from './components/Modal';
 import { getTodayData } from './utils/getTodayData';
-import { ArrowLeftIc } from '../../assets/svgs';
+import { SummaryIc, ArrowLeftIc } from '../../assets/svgs';
 import ButtonBg from '../../components/commons/ButtonBg';
 import FullBtn from '../../components/commons/FullBtn';
 import Header from '../../components/commons/Header';
@@ -57,6 +57,7 @@ const Summary = () => {
         <DateChip>{getTodayData()}</DateChip>
       </TitleContainer>
       <Spacing marginBottom="3.4" />
+      {/* 연결필요 */}
       <TempSumDiv>분노에 찬 하루였군요</TempSumDiv>
       <Spacing marginBottom="1" />
       <SummaryWrapper>
@@ -80,6 +81,7 @@ const Summary = () => {
             있다.
           </Content>
         </ContentWrapper>
+        <SummaryIcon />
       </SummaryWrapper>
       {/* api쏘는 함수 연결 필요 */}
       <FullBtn activeText={`${character}에게 답장받기`} btnColorType="gray" isBtnDisable={false} />
@@ -125,6 +127,8 @@ const TempSumDiv = styled.section`
 `;
 
 const SummaryWrapper = styled.section`
+  position: relative;
+
   width: 100%;
   padding: 1.3rem 2rem 10.73rem;
   border-radius: 8px;
@@ -169,4 +173,10 @@ const ModalImg = styled.div`
   height: 16rem;
 
   background-color: ${({ theme }) => theme.colors.key};
+`;
+
+const SummaryIcon = styled(SummaryIc)`
+  position: absolute;
+  right: 2.041rem;
+  bottom: 0;
 `;

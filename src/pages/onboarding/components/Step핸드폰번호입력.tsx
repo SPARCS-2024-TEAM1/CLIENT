@@ -1,8 +1,9 @@
+import styled from '@emotion/styled';
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
-import { ArrowLeftIc } from '../../../assets/svgs';
+import { ArrowLeftIc, PhoneIc } from '../../../assets/svgs';
 import FullBtn from '../../../components/commons/FullBtn';
 import Header from '../../../components/commons/Header';
 import Input from '../../../components/commons/Input';
@@ -45,7 +46,17 @@ const Step핸드폰번호입력 = () => {
   return (
     <>
       <Header LeftSvg={ArrowLeftIc} onClickLeft={onClickBack} />
-      <Title text={`안녕하세요\n전화번호를 입력해주세요`} type="middle" />
+      <Title
+        text={
+          <div>
+            안녕하세요
+            <PhoneIcon />
+            <br />
+            전화번호를 입력해주세요
+          </div>
+        }
+        type="middle"
+      />
       <Spacing marginBottom="2" />
       <Input placeholder="010-1234-5678" inputVal={phoneNumber} handleInputVal={handleChangePhone} />
       <Spacing marginBottom="3" />
@@ -61,3 +72,7 @@ const Step핸드폰번호입력 = () => {
 };
 
 export default Step핸드폰번호입력;
+
+const PhoneIcon = styled(PhoneIc)`
+  margin-left: 0.6rem;
+`;

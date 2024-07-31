@@ -19,5 +19,15 @@ export { default as SadnessIc } from './img_sadness.svg?react';
 export { default as StressIc } from './img_stress.svg?react';
 
 export { default as NameIc } from './img_name.svg?react';
+export { default as NameIcPng } from './img_namePng.svg?react';
 export { default as ReplyDgIc } from './img_reply_dg.svg?react';
 export { default as ReplyPjIc } from './img_reply_pj.svg?react';
+export { default as PhoneIc } from './img_phone.svg?react';
+export { default as NicknameFlowerIc } from './img_nicknameFlowerIc.svg?react';
+
+// modal
+export { default as ModalCutIc } from './img_modal_cut.svg?react';
+export { default as ModalDoneIc } from './img_modal_done.svg?react';
+export { default as ModalStopIc } from './img_modal_stop.svg?react';
+
+export { default as SummaryIc } from './img_summary.svg?react';

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 interface TitlePropsType {
-  text: string;
+  text: string | React.ReactNode;
   type: string;
   align?: string;
   paddingTop?: number;
@@ -21,6 +21,7 @@ export default Title;
 const Wrapper = styled.div<{ $type: string; $align: string; $paddingTop: number }>`
   display: flex;
   justify-content: ${({ $align }) => ($align === 'center' ? 'center' : 'flex-start')};
+  align-items: center;
 
   padding-top: ${({ $paddingTop }) => `${$paddingTop}rem`};
 

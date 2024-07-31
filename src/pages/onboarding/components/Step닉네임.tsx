@@ -1,8 +1,9 @@
+import styled from '@emotion/styled';
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import { ArrowLeftIc, NameIc } from '../../../assets/svgs';
+import { ArrowLeftIc, NameIcPng, NicknameFlowerIc } from '../../../assets/svgs';
 import FullBtn from '../../../components/commons/FullBtn';
 import Header from '../../../components/commons/Header';
 import Input from '../../../components/commons/Input';
@@ -58,7 +59,17 @@ const Step닉네임 = () => {
   return (
     <>
       <Header LeftSvg={ArrowLeftIc} onClickLeft={onClickBack} />
-      <Title text={`반가워요\n어떻게 불러드리면 될까요?`} type="middle" />
+      <Title
+        text={
+          <div>
+            반가워요
+            <NicknameFlowerIcon />
+            <br />
+            어떻게 불러드리면 될까요?
+          </div>
+        }
+        type="middle"
+      />
       <Spacing marginBottom="2" />
       <Input
         placeholder="닉네임을 입력해주세요"
@@ -67,7 +78,7 @@ const Step닉네임 = () => {
         wordLimit={10}
       />
       <Spacing marginBottom="1.2" />
-      <NameIc />
+      <NameIcPngIcon />
       <Spacing marginBottom="2" />
       <FullBtn
         activeText="확인"
@@ -80,3 +91,11 @@ const Step닉네임 = () => {
 };
 
 export default Step닉네임;
+
+const NicknameFlowerIcon = styled(NicknameFlowerIc)`
+  margin-left: 0.6rem;
+`;
+
+const NameIcPngIcon = styled(NameIcPng)`
+  width: 100%;
+`;

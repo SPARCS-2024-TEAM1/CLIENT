@@ -285,7 +285,7 @@ const RecordToday = () => {
           {isStart ? '완료' : '시작하기'}
         </Button>
       </DownWrapper>
-      <BtnCloseModal isModalOpen={isModalOpen} {...getModalProps(modalType)} />
+      <BtnCloseModal isModalOpen={isModalOpen} {...getModalProps(modalType)} type={modalType} />
     </>
   );
 };

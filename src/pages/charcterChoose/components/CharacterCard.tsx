@@ -20,7 +20,7 @@ const CharacterCard = (props: CharacterCardPropsType) => {
       onClick={() => onClick(id, name)}
       $isCharClicked={selectedChar !== ''}
       $isSelected={characterList[id]}>
-      {name === '동글이' ? <ReplyDgIc /> : <ReplyPjIc />}
+      {name === '동글이' ? <ReplyDgIcon /> : <ReplyPjIcon />}
       <NameChipDiv>
         <Name>{name}</Name>
         {chipList.map((chip) => (
@@ -39,10 +39,21 @@ const Wrapper = styled.button<{ $isCharClicked: boolean; $isSelected: boolean }>
   flex-direction: column;
   position: relative;
 
+  width: 100%;
   padding: 0;
   border-radius: 4px;
 
   opacity: ${({ $isSelected, $isCharClicked }) => ($isCharClicked ? ($isSelected ? '' : '10%') : '')};
+`;
+
+const ReplyDgIcon = styled(ReplyDgIc)`
+  width: 100%;
+  height: 100%;
+`;
+
+const ReplyPjIcon = styled(ReplyPjIc)`
+  width: 100%;
+  height: 100%;
 `;
 
 const NameChipDiv = styled.div`
