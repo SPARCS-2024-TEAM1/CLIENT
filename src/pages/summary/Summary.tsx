@@ -7,7 +7,7 @@ import Loading from './components/Loading';
 import { AutoCloseModal } from './components/Modal';
 import { usePostChatbotReply } from './hooks/queries';
 import { getTodayData } from './utils/getTodayData';
-import { SummaryIc, ArrowLeftIc } from '../../assets/svgs';
+import { SummaryIc, ArrowLeftIc, ModalReplyIc } from '../../assets/svgs';
 import ButtonBg from '../../components/commons/ButtonBg';
 import FullBtn from '../../components/commons/FullBtn';
 import Header from '../../components/commons/Header';
@@ -79,7 +79,7 @@ const Summary = () => {
           handleShowModal={handleShowModal}
           summary={SUMMARY_LIST}
           answer={answer}>
-          <ModalImg />
+          <ModalReplyIcon />
         </AutoCloseModal>
       </>
     );
@@ -208,4 +208,8 @@ const SummaryIcon = styled(SummaryIc)`
   position: absolute;
   right: 2.041rem;
   bottom: 0;
+`;
+
+const ModalReplyIcon = styled(ModalReplyIc)`
+  width: 100%;
 `;

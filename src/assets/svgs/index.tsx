@@ -46,3 +46,6 @@ export { default as RecordStressIc } from './img_record_stress.svg?react';
 // 응답 위에 있는 애들
 export { default as ReplyCompleteDgIc } from './img_replycomplete_dg.svg?react';
 export { default as ReplyCompletePjIc } from './img_replycomplete_pj.svg?react';
+
+export { default as ModalReplyIc } from './img_modal_reply.svg?react';
+export { default as RecordEmptyIc } from './img_record_empty.svg?react';

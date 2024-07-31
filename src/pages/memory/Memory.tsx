@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import LastMemoryBox from './components/LastMemoryBox';
 import { MEMORY_LIST } from './constants/constants';
-import { ArrowLeftIc } from '../../assets/svgs';
+import { ArrowLeftIc, RecordEmptyIc } from '../../assets/svgs';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import ReplyContainer from '../reply/components/ReplyContainer';
@@ -16,7 +16,7 @@ const Memory = () => {
   const [memoryType, setMemoryType] = useState('오늘의 기록');
 
   // 서버에서 받아온 지난 기록 리스트 필요
-  const length = 1;
+  const length = 0;
 
   const onClickBack = () => {
     navigate('/main');
@@ -72,9 +72,7 @@ const Memory = () => {
           )}
         </>
       ) : (
-        <EmptyImg>
-          <EmptyText onClick={onClickEmptyText}>감정 기록하러 가볼까요?</EmptyText>
-        </EmptyImg>
+        <RecordEmptyIcon onClick={onClickEmptyText} />
       )}
     </Wrapper>
   );
@@ -112,28 +110,7 @@ const Container = styled.section`
   grid-template-columns: repeat(auto-fill, minmax(16.4rem, 1fr));
 `;
 
-const EmptyImg = styled.div`
-  position: relative;
-
-  width: 33.5rem;
-  height: 18rem;
-
-  background-color: ${({ theme }) => theme.colors.key};
-`;
-
-const EmptyText = styled.span`
-  position: absolute;
-  right: 9.05rem;
-  bottom: 1.546rem;
-
-  height: 3rem;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-
-  background-color: ${({ theme }) => theme.colors.grayScaleB_Text};
-
-  color: ${({ theme }) => theme.colors.grayScaleLg};
-
-  ${({ theme }) => theme.fonts.Caption2_SB_14};
-  cursor: pointer;
+const RecordEmptyIcon = styled(RecordEmptyIc)`
+  width: 100%;
+  height: 100%;
 `;
