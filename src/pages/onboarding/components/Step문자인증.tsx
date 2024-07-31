@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { ArrowLeftIc, ClockIc } from '../../../assets/svgs';
 import FullBtn from '../../../components/commons/FullBtn';
@@ -9,7 +9,7 @@ import Header from '../../../components/commons/Header';
 import Input from '../../../components/commons/Input';
 import Spacing from '../../../components/commons/Spacing';
 import Title from '../../../components/commons/Title';
-import { userState } from '../../../states/userState';
+import { userState, userStateType } from '../../../states/userState';
 import { usePostPhoneNumber, usePostVerifyCode } from '../hooks/queries';
 import { formatTime } from '../utils/formatTime';
 
@@ -17,12 +17,13 @@ const Step문자인증 = () => {
   const navigate = useNavigate();
   const [authCode, setAuthCode] = useState('');
   const [isValid, setIsValid] = useState<boolean | undefined>();
-  const user = useRecoilValue(userState);
+  const [user, setUserState] = useRecoilState(userState);
 
   const { mutate: postPhoneNumber } = usePostPhoneNumber(user.phoneNumber);
   const {
     mutate: postVerifyCode,
-    data,
+    memberId,
+    nickname,
     isSuccess,
   } = usePostVerifyCode({
     phoneNumber: user.phoneNumber,
@@ -69,12 +70,20 @@ const Step문자인증 = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      setIsValid(true);
-      navigate('/onboarding/3');
+      if (nickname !== undefined) {
+        setIsValid(true);
+        setUserState((prev: userStateType) => ({
+          ...prev,
+          nickName: nickname,
+          userId: memberId,
+        }));
+        navigate('/main');
+      } else {
+        setIsValid(true);
+        navigate('/onboarding/3');
+      }
     }
-  }, [isSuccess]);
-
-  console.log(data);
+  }, [isSuccess, nickname]);
 
   return (
     <>

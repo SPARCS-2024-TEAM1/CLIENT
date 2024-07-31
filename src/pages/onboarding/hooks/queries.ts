@@ -32,9 +32,12 @@ export const usePostVerifyCode = ({ phoneNumber, verificationCode }: postVerifyC
     mutationFn: () => postVerifyCode({ phoneNumber, verificationCode }),
   });
 
-  console.log(data);
+  // console.log(data);
+  const code = data && data.code;
+  const memberId = data?.data?.memberId;
+  const nickname = data?.data?.nickname;
 
-  return { mutate, data, isSuccess };
+  return { mutate, code, memberId, nickname, isSuccess };
 };
 
 // 핸드폰번호, 닉네임 보내서 유저 가입시키는 post
@@ -44,5 +47,8 @@ export const usePostSignup = ({ nickname, phoneNumber }: postSignupType) => {
     mutationFn: () => postSignup({ nickname, phoneNumber }),
   });
 
-  return { mutate, data, isSuccess };
+  const memberId = data?.data?.memberId;
+  const userNickname = data?.data?.nickname;
+
+  return { mutate, data, isSuccess, memberId, userNickname };
 };

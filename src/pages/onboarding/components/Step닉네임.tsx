@@ -19,8 +19,9 @@ const Step닉네임 = () => {
 
   const {
     mutate: postSignup,
-    data,
     isSuccess,
+    memberId,
+    userNickname,
   } = usePostSignup({
     nickname: nickNameVal,
     phoneNumber: user.phoneNumber,
@@ -44,11 +45,16 @@ const Step닉네임 = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      setUserState((prev: userStateType) => ({
+        ...prev,
+        nickName: userNickname,
+        userId: memberId,
+      }));
       navigate('/main');
     }
   }, [isSuccess]);
 
-  console.log(data);
+  // console.log(user);
 
   return (
     <>
