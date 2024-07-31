@@ -60,3 +60,6 @@ export { default as ReplyJoyIc } from './img_reply_joy.svg?react';
 export { default as ReplyLonelinessIc } from './img_reply_loneliness.svg?react';
 export { default as ReplySadnessIc } from './img_reply_sadness.svg?react';
 export { default as ReplyStressIc } from './img_reply_stress.svg?react';
+
+// 메인페이지
+export { default as MainIc } from './img_main.svg?react';
