@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { FEELING_LIST } from './constants/constants';
 import { ArrowLeftIc } from '../../assets/svgs';
@@ -8,11 +9,15 @@ import FullBtn from '../../components/commons/FullBtn';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import Title from '../../components/commons/Title';
+import { moodState } from '../../states/moodState';
+import { nicknameState } from '../../states/nicknameState';
 
 const TodayFeeling = () => {
   const navigate = useNavigate();
   const [feelingArr, setFeelingArr] = useState(Array(9).fill(false));
   const [selectedFeeling, setSelectedFeeling] = useState('');
+  const nickname = useRecoilValue(nicknameState);
+  const setMoodState = useSetRecoilState(moodState);
 
   const onClickBack = () => {
     navigate('/main');
@@ -22,6 +27,7 @@ const TodayFeeling = () => {
     const updatedFeeling = feelingArr.map((_, index) => index === id);
     setFeelingArr(updatedFeeling);
     setSelectedFeeling(feeling);
+    setMoodState(feeling);
   };
 
   const onClickNext = () => {
@@ -31,7 +37,7 @@ const TodayFeeling = () => {
   return (
     <>
       <Header LeftSvg={ArrowLeftIc} onClickLeft={onClickBack} />
-      <Title text={`또리누나의사랑 님\n오늘 기분은 어떠신가요?`} type="middle" align="center" />
+      <Title text={`${nickname} 님\n오늘 기분은 어떠신가요?`} type="middle" align="center" />
       <Spacing marginBottom="5.197" />
       {/* 실제 상수 데이터로 바꿔야 함 */}
       <FeelingContainer>

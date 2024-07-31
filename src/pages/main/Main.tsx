@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import FullBtn from '../../components/commons/FullBtn';
 import Spacing from '../../components/commons/Spacing';
 import Title from '../../components/commons/Title';
+import { nicknameState } from '../../states/nicknameState';
 
 const Main = () => {
   const navigate = useNavigate();
+  const nickname = useRecoilValue(nicknameState);
 
   const onClickRecordToday = () => {
     navigate('/todayFeeling');
@@ -17,8 +20,7 @@ const Main = () => {
   };
   return (
     <>
-      {/* 닉네임 앞에 값으로 변경 필요 */}
-      <Title text={`또리누나의사랑 님의\n감정 기록 공간`} type="head" paddingTop={8} align="center" />
+      <Title text={`${nickname} 님의\n감정 기록 공간`} type="head" paddingTop={8} align="center" />
       <Spacing marginBottom="2.3" />
       <ImgDiv />
       <Spacing marginBottom="1.6" />

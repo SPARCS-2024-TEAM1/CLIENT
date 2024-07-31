@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 
 import CharacterCard from './components/CharacterCard';
 import { CHARACTER_LIST } from './constants/constants';
@@ -9,11 +10,13 @@ import FullBtn from '../../components/commons/FullBtn';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import Title from '../../components/commons/Title';
+import { characterState } from '../../states/characterState';
 
 const CharacterChoose = () => {
   const navigate = useNavigate();
   const [characterList, setCharacterList] = useState(Array(3).fill(false));
   const [selectedChar, setSelectedChar] = useState('');
+  const setCharacterState = useSetRecoilState(characterState);
 
   const onClickBack = () => {
     navigate('/todayFeeling');
@@ -23,10 +26,11 @@ const CharacterChoose = () => {
     navigate('/recordToday');
   };
 
-  const onClickCharacter = (id: number, feeling: string) => {
+  const onClickCharacter = (id: number, character: string) => {
     const updatedFeeling = characterList.map((_, index) => index === id);
     setCharacterList(updatedFeeling);
-    setSelectedChar(feeling);
+    setSelectedChar(character);
+    setCharacterState(character);
   };
 
   return (

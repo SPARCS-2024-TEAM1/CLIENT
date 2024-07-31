@@ -32,6 +32,8 @@ export const usePostVerifyCode = ({ phoneNumber, verificationCode }: postVerifyC
     mutationFn: () => postVerifyCode({ phoneNumber, verificationCode }),
   });
 
+  console.log(data);
+
   return { mutate, data, isSuccess };
 };
 
