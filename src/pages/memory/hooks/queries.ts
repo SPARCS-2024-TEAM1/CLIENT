@@ -1,21 +1,21 @@
 import { useQuery } from '@tanstack/react-query';
 // import { useMutation,useQueryClient } from '@tanstack/react-query';
 
-import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
+import getRecordList from '../apis/getRecordList';
 
-export const QUERY_KEY_MAIN = {
-  getTempSaveContent: 'getTempSaveContent',
+export const QUERY_KEY_MEMORY = {
+  getRecordList: 'getRecordList',
 };
 
-// 임시저장 불러오기 GET
-export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) => {
+// 지난 기록 리스트 get
+export const useGetRecordList = (memberId: number, isLastClicked: boolean) => {
   const { data } = useQuery({
-    queryKey: [QUERY_KEY_MAIN.getTempSaveContent, postId],
-    queryFn: () => fetchTempSaveContent(postId),
-    enabled: !!isTempClicked,
+    queryKey: [QUERY_KEY_MEMORY.getRecordList, memberId],
+    queryFn: () => getRecordList(memberId),
+    enabled: !!isLastClicked,
   });
 
-  const tempTopicList = data && data?.data?.topicList;
+  const moodDiaryCards = data?.data?.moodDiaryCards;
 
-  return { tempTopicList };
+  return { moodDiaryCards };
 };

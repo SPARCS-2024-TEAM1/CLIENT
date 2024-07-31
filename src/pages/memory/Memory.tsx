@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 
 import LastMemoryBox from './components/LastMemoryBox';
 import { MEMORY_LIST } from './constants/constants';
+import { useGetRecordList } from './hooks/queries';
 import {
   ArrowLeftIc,
   RecordEmptyIc,
@@ -17,6 +18,7 @@ import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import { characterState } from '../../states/characterState';
 import { todayMoodDiaryIdState } from '../../states/todayMoodDiaryIdState';
+import { userState } from '../../states/userState';
 import ReplyContainer from '../reply/components/ReplyContainer';
 import { usePostAiAudio } from '../reply/hooks/queries';
 
@@ -25,8 +27,11 @@ const Memory = () => {
   const [isToggleOpen, setIsToggleOpen] = useState(true);
   const [memoryType, setMemoryType] = useState('오늘의 기록');
   const [isPlaying, setIsPlaying] = useState(false);
+  const user = useRecoilValue(userState);
 
   const audioRef = useRef<HTMLAudioElement>(null);
+  const { moodDiaryCards } = useGetRecordList(Number(user.userId), memoryType === '지난 기록들');
+  console.log(moodDiaryCards);
 
   // 넷 다 서버에서 와야 함
   const character = useRecoilValue(characterState);
@@ -71,9 +76,6 @@ const Memory = () => {
     }
   }, []);
 
-  // 서버에서 받아온 지난 기록 리스트 필요
-  const length = 1;
-
   const onClickBack = () => {
     navigate('/main');
   };
@@ -104,7 +106,7 @@ const Memory = () => {
         </MemoryType>
       </ListTypeWrapper>
       <Spacing marginBottom="3" />
-      {length ? (
+      {moodDiaryCards && moodDiaryCards.length ? (
         <>
           {memoryType === '오늘의 기록' && (
             <>
