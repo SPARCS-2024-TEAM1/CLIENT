@@ -12,12 +12,12 @@ export const QUERY_KEY_ONBOARDING = {
 
 // 문자인증을 통한 회원가입 post
 export const usePostPhoneNumber = (phoneNumber: string) => {
-  const { mutate, isSuccess } = useMutation({
+  const { mutate, isSuccess, data } = useMutation({
     mutationKey: [QUERY_KEY_ONBOARDING.postPhoneNumber],
     mutationFn: () => postPhoneNumber(phoneNumber),
   });
 
-  return { mutate, isSuccess };
+  return { mutate, isSuccess, data };
 };
 
 interface postVerifyCodeType {

@@ -1,21 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
-// import { useMutation,useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
-import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
+import { postTodayFeeling, postTodayFeelingType } from '../apis/postTodayFeeling';
 
-export const QUERY_KEY_MAIN = {
-  getTempSaveContent: 'getTempSaveContent',
+export const QUERY_KEY_RECORD_TODAY = {
+  postTodayFeeling: postTodayFeeling,
 };
 
-// 임시저장 불러오기 GET
-export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) => {
-  const { data } = useQuery({
-    queryKey: [QUERY_KEY_MAIN.getTempSaveContent, postId],
-    queryFn: () => fetchTempSaveContent(postId),
-    enabled: !!isTempClicked,
+// 음성 보내면 요약본 주는 post
+export const usePostTodayFeeling = ({ memberId, mood, assistant, file }: postTodayFeelingType) => {
+  const { mutate, isSuccess, data } = useMutation({
+    mutationKey: [QUERY_KEY_RECORD_TODAY.postTodayFeeling, memberId, mood, assistant, file],
+    mutationFn: () => postTodayFeeling({ memberId, mood, assistant, file }),
   });
 
-  const tempTopicList = data && data?.data?.topicList;
-
-  return { tempTopicList };
+  return { mutate, isSuccess, data };
 };
