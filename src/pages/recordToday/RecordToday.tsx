@@ -279,7 +279,7 @@ const RecordToday = () => {
       {/* <button onClick={onSubmitAudioFile}>결과 확인</button>  */}
 
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <audio controls src={serverAudio || undefined}></audio>
+      {/* <audio controls src={serverAudio || undefined}></audio> */}
       <DownWrapper>
         <Button type="button" onClick={onClickStart}>
           {isStart ? '완료' : '시작하기'}

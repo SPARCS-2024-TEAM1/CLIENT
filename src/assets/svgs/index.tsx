@@ -17,3 +17,5 @@ export { default as JoyIc } from './img_joy.svg?react';
 export { default as LonelinessIc } from './img_loneliness.svg?react';
 export { default as SadnessIc } from './img_sadness.svg?react';
 export { default as StressIc } from './img_stress.svg?react';
+
+export { default as NameIc } from './img_name.svg?react';

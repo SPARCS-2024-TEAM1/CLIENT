@@ -1,9 +1,8 @@
-import styled from '@emotion/styled';
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import { ArrowLeftIc } from '../../../assets/svgs';
+import { ArrowLeftIc, NameIc } from '../../../assets/svgs';
 import FullBtn from '../../../components/commons/FullBtn';
 import Header from '../../../components/commons/Header';
 import Input from '../../../components/commons/Input';
@@ -68,7 +67,7 @@ const Step닉네임 = () => {
         wordLimit={10}
       />
       <Spacing marginBottom="1.2" />
-      <ImgDiv />
+      <NameIc />
       <Spacing marginBottom="2" />
       <FullBtn
         activeText="확인"
@@ -81,10 +80,3 @@ const Step닉네임 = () => {
 };
 
 export default Step닉네임;
-
-const ImgDiv = styled.div`
-  width: 100%;
-  height: 31rem;
-
-  background-color: ${({ theme }) => theme.colors.key};
-`;
