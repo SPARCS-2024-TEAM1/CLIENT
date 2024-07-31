@@ -49,3 +49,14 @@ export { default as ReplyCompletePjIc } from './img_replycomplete_pj.svg?react';
 
 export { default as ModalReplyIc } from './img_modal_reply.svg?react';
 export { default as RecordEmptyIc } from './img_record_empty.svg?react';
+
+// 이야기 요약본 위에 이미지
+export { default as ReplyAngerIc } from './img_reply_anger.svg?react';
+export { default as ReplyAnxietyIc } from './img_reply_anxiety.svg?react';
+export { default as ReplyCalmnessIc } from './img_reply_calmness.svg?react';
+export { default as ReplyFatigueIc } from './img_reply_fatigue.svg?react';
+export { default as ReplyGratitudeIc } from './img_reply_gratitude.svg?react';
+export { default as ReplyJoyIc } from './img_reply_joy.svg?react';
+export { default as ReplyLonelinessIc } from './img_reply_loneliness.svg?react';
+export { default as ReplySadnessIc } from './img_reply_sadness.svg?react';
+export { default as ReplyStressIc } from './img_reply_stress.svg?react';
