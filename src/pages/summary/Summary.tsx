@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
@@ -22,6 +22,7 @@ const Summary = () => {
   const location = useLocation();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [onSuccess, setOnSuccess] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
   const user = useRecoilValue(userState);
   const character = useRecoilValue(characterState);
   const moodDiaryId = useRecoilValue(todayMoodDiaryIdState);
@@ -44,14 +45,18 @@ const Summary = () => {
     postChatbotReply();
   };
 
+  useEffect(() => {
+    setIsComplete(isSuccess);
+  }, [isSuccess]);
+
   if (isPending) {
     return (
       <>
         <Loading />
-        {isSuccess && (
+        {isComplete && (
           <AutoCloseModal
             text={`답장이 완성되었어요! \n읽으러 가볼까요?`}
-            showModal={isSuccess}
+            showModal={isComplete}
             path="/reply"
             handleShowModal={handleShowModal}
             summary={SUMMARY_LIST}
@@ -59,6 +64,23 @@ const Summary = () => {
             <ModalImg />
           </AutoCloseModal>
         )}
+      </>
+    );
+  }
+
+  if (isComplete) {
+    return (
+      <>
+        <Loading />
+        <AutoCloseModal
+          text={`답장이 완성되었어요! \n읽으러 가볼까요?`}
+          showModal={isComplete}
+          path="/reply"
+          handleShowModal={handleShowModal}
+          summary={SUMMARY_LIST}
+          answer={answer}>
+          <ModalImg />
+        </AutoCloseModal>
       </>
     );
   }

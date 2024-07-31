@@ -51,8 +51,10 @@ const Reply = () => {
   return (
     <Wrapper $isToggleOpen={isToggleOpen}>
       <SaveImgWrapper ref={saveRef}>
-        {character === '동글이' && <ReplyCompleteDgIcon />}
-        {character === '뾰족이' && <ReplyCompletePjIcon />}
+        <ReplyImg>
+          {character === '동글이' && <ReplyCompleteDgIcon />}
+          {character === '뾰족이' && <ReplyCompletePjIcon />}
+        </ReplyImg>
         <ReplyContainer
           isToggleOpen={isToggleOpen}
           onClickToggle={onClickToggle}
@@ -76,24 +78,35 @@ const Reply = () => {
 export default Reply;
 
 const Wrapper = styled.div<{ $isToggleOpen: boolean }>`
-  padding: ${({ $isToggleOpen }) => ($isToggleOpen ? '0 0 17rem' : '')};
+  padding: ${({ $isToggleOpen }) => ($isToggleOpen ? '0 0 17rem' : '0 0 17rem')};
 `;
 
 const SaveImgWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
   margin: 0 -2rem;
   padding: 0 2rem 2rem;
 
   background-color: ${({ theme }) => theme.colors.grayScaleBg};
 `;
 
+const ReplyImg = styled.div`
+  display: flex;
+  gap: 0.9rem;
+  position: relative;
+
+  width: 100%;
+  height: 17rem;
+`;
+
 const ReplyCompletePjIcon = styled(ReplyCompletePjIc)`
   position: absolute;
-  top: 5.6rem;
-  left: 2rem;
+  bottom: -2rem;
 `;
 
 const ReplyCompleteDgIcon = styled(ReplyCompleteDgIc)`
   position: absolute;
-  top: 5.6rem;
-  left: 2rem;
+  bottom: 0;
+  bottom: -2rem;
 `;
