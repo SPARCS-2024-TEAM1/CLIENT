@@ -83,7 +83,6 @@ const Reply = () => {
       audioPlayer.addEventListener('play', handlePlay);
       audioPlayer.addEventListener('pause', handlePause);
 
-      // Clean up event listeners on unmount
       return () => {
         audioPlayer.removeEventListener('play', handlePlay);
         audioPlayer.removeEventListener('pause', handlePause);

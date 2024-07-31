@@ -1,22 +1,78 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import LastMemoryBox from './components/LastMemoryBox';
 import { MEMORY_LIST } from './constants/constants';
-import { ArrowLeftIc, RecordEmptyIc } from '../../assets/svgs';
+import {
+  ArrowLeftIc,
+  RecordEmptyIc,
+  ReplyCompleteDgIc,
+  ReplyCompletePjIc,
+  ReplyPlayIc,
+  ReplyPauseIc,
+} from '../../assets/svgs';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
+import { characterState } from '../../states/characterState';
+import { todayMoodDiaryIdState } from '../../states/todayMoodDiaryIdState';
 import ReplyContainer from '../reply/components/ReplyContainer';
-import ReplyImg from '../reply/components/ReplyImg';
+import { usePostAiAudio } from '../reply/hooks/queries';
 
 const Memory = () => {
   const navigate = useNavigate();
   const [isToggleOpen, setIsToggleOpen] = useState(true);
   const [memoryType, setMemoryType] = useState('오늘의 기록');
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  // 넷 다 서버에서 와야 함
+  const character = useRecoilValue(characterState);
+  const moodDiaryId = useRecoilValue(todayMoodDiaryIdState);
+  const SUMMARY_LIST = ['히히', '히히'];
+  const answer = '응답이라구요';
+
+  const { mutate: postAiAudio, isSuccess, data } = usePostAiAudio(Number(moodDiaryId));
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      const url = URL.createObjectURL(data);
+      const audioPlayer = audioRef.current;
+      if (audioPlayer) {
+        audioPlayer.src = url;
+        audioPlayer.play();
+      }
+    }
+  }, [isSuccess, data]);
+
+  // 오디오 실행
+  const onClickReplyVid = () => {
+    const audioPlayer = audioRef.current;
+    if (audioPlayer) {
+      postAiAudio();
+    }
+  };
+
+  useEffect(() => {
+    const audioPlayer = audioRef.current;
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    if (audioPlayer) {
+      audioPlayer.addEventListener('play', handlePlay);
+      audioPlayer.addEventListener('pause', handlePause);
+
+      return () => {
+        audioPlayer.removeEventListener('play', handlePlay);
+        audioPlayer.removeEventListener('pause', handlePause);
+      };
+    }
+  }, []);
 
   // 서버에서 받아온 지난 기록 리스트 필요
-  const length = 0;
+  const length = 1;
 
   const onClickBack = () => {
     navigate('/main');
@@ -52,8 +108,19 @@ const Memory = () => {
         <>
           {memoryType === '오늘의 기록' && (
             <>
-              <ReplyImg paddingTop={0} />
-              <ReplyContainer isToggleOpen={isToggleOpen} onClickToggle={onClickToggle} />
+              <ReplyImg>
+                {character === '동글이' && <ReplyCompleteDgIcon />}
+                {character === '뾰족이' && <ReplyCompletePjIcon />}
+                {isPlaying ? <ReplyPauseIcon onClick={onClickReplyVid} /> : <ReplyPlayIcon onClick={onClickReplyVid} />}
+                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                <Audio id="audioPlayer" controls ref={audioRef}></Audio>
+              </ReplyImg>
+              <ReplyContainer
+                isToggleOpen={isToggleOpen}
+                onClickToggle={onClickToggle}
+                answer={answer}
+                summary={SUMMARY_LIST}
+              />
             </>
           )}
           {memoryType === '지난 기록들' && (
@@ -113,4 +180,39 @@ const Container = styled.section`
 const RecordEmptyIcon = styled(RecordEmptyIc)`
   width: 100%;
   height: 100%;
+`;
+
+const ReplyImg = styled.div`
+  display: flex;
+  gap: 0.9rem;
+  position: relative;
+
+  width: 100%;
+  height: 17rem;
+`;
+
+const ReplyCompletePjIcon = styled(ReplyCompletePjIc)`
+  position: absolute;
+  bottom: -2rem;
+`;
+
+const ReplyCompleteDgIcon = styled(ReplyCompleteDgIc)`
+  position: absolute;
+  bottom: -2rem;
+`;
+
+const ReplyPlayIcon = styled(ReplyPlayIc)`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+`;
+
+const ReplyPauseIcon = styled(ReplyPauseIc)`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+`;
+
+const Audio = styled.audio`
+  display: none;
 `;
