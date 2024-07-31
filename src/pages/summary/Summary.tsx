@@ -35,7 +35,7 @@ const Summary = () => {
   const navigate = useNavigate();
   const location = useLocation();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [onSuccess, setOnSuccess] = useState(false);
+  const [_, setOnSuccess] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const user = useRecoilValue(userState);
   const character = useRecoilValue(characterState);

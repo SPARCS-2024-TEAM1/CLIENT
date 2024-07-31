@@ -11,7 +11,7 @@ const Home = () => {
   };
   return (
     <>
-      <Title text={`오늘의 이야기와 감정을 \n나누는 특별한 공간 \n\nArea`} type="head" paddingTop={20.3} />
+      <Title text={`입시생들의 속마음을\n들어주고 답변해주는 공간`} type="head" paddingTop={20.3} align="center" />
       <FullBtn activeText="휴대전화 번호로 시작하기" isBtnDisable={false} onClick={onClickNext} />
     </>
   );
