@@ -5,6 +5,7 @@ import App from './App.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />,
+    <App />
+    {/* eslint-disable-next-line prettier/prettier */}
   </React.StrictMode>,
 );
