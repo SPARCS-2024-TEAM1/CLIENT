@@ -1,19 +1,25 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import Loading from './components/Loading';
 import { AutoCloseModal } from './components/Modal';
+import { getTodayData } from './utils/getTodayData';
 import { ArrowLeftIc } from '../../assets/svgs';
 import ButtonBg from '../../components/commons/ButtonBg';
 import FullBtn from '../../components/commons/FullBtn';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import Title from '../../components/commons/Title';
+import { characterState } from '../../states/characterState';
+import { userState } from '../../states/userState';
 
 const Summary = () => {
   const navigate = useNavigate();
   const [onSuccess, setOnSuccess] = useState(true);
+  const user = useRecoilValue(userState);
+  const character = useRecoilValue(characterState);
 
   // axios 결과값 받아오기
   const isLoading = false;
@@ -22,7 +28,6 @@ const Summary = () => {
   };
 
   const onClickBack = () => {
-    // url 바꿔야 함
     navigate('/character');
   };
 
@@ -47,10 +52,9 @@ const Summary = () => {
     <Wrapper>
       <Header LeftSvg={ArrowLeftIc} onClickLeft={onClickBack} />
       <TitleContainer>
-        {/* 닉네임 실제 유저로 변경 필요 */}
-        <Title text={`또리누나사랑해 님의 이야기를 \n정리해봤어요`} type="middle" align="center" paddingTop={7.1} />
+        <Title text={`${user.nickName} 님의 이야기를 \n정리해봤어요`} type="middle" align="center" paddingTop={7.1} />
         <Spacing marginBottom="1.2" />
-        <DateChip>2024년 7월 29일</DateChip>
+        <DateChip>{getTodayData()}</DateChip>
       </TitleContainer>
       <Spacing marginBottom="3.4" />
       <TempSumDiv>분노에 찬 하루였군요</TempSumDiv>
@@ -78,7 +82,7 @@ const Summary = () => {
         </ContentWrapper>
       </SummaryWrapper>
       {/* api쏘는 함수 연결 필요 */}
-      <FullBtn activeText="00에게 답장받기" btnColorType="gray" isBtnDisable={false} />
+      <FullBtn activeText={`${character}에게 답장받기`} btnColorType="gray" isBtnDisable={false} />
       <ButtonBg />
     </Wrapper>
   );

@@ -5,11 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import { BtnCloseModal } from './components/Modal';
+import { usePostTodayFeeling } from './hooks/queries';
 import { ArrowLeftIc, RestartIc } from '../../assets/svgs';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import Title from '../../components/commons/Title';
 import { characterState } from '../../states/characterState';
+import { moodState } from '../../states/moodState';
+import { userState } from '../../states/userState';
 
 const RecordToday = () => {
   const navigate = useNavigate();
@@ -19,6 +22,8 @@ const RecordToday = () => {
   const [modalType, setModalType] = useState('');
   const [timeLeft, setTimeLeft] = useState(30);
   const character = useRecoilValue(characterState);
+  const user = useRecoilValue(userState);
+  const mood = useRecoilValue(moodState);
 
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [media, setMedia] = useState<MediaRecorder | null>(null);
@@ -28,8 +33,8 @@ const RecordToday = () => {
   const [analyser, setAnalyser] = useState<ScriptProcessorNode | null>(null);
   const [audioUrl, setAudioUrl] = useState<Blob | null>(null);
   const [serverAudio, setServerAudio] = useState<string | null>(null);
-  const [serverAudioFile, setServerAudioFile] = useState<File | null>(null);
-  console.log(serverAudioFile);
+
+  const { mutate: postTodayFeeling, isSuccess } = usePostTodayFeeling();
 
   // 뒤로가기 눌렀을 때 열리는 모달
   const onClickBack = () => {
@@ -72,8 +77,13 @@ const RecordToday = () => {
   const onClickSubmit = () => {
     // 서버에 제출하는 로직
     onSubmitAudioFile();
-    navigate('/summary');
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('/summary');
+    }
+  }, [isSuccess]);
 
   // 하단 Full 버튼 눌렸을 때
   const onClickStart = () => {
@@ -205,8 +215,12 @@ const RecordToday = () => {
 
     if (audioUrl) {
       const sound = new File([audioUrl], 'todayFeelingRecord', { lastModified: new Date().getTime(), type: 'audio' });
-      // 파일 저장 필요
-      setServerAudioFile(sound);
+      postTodayFeeling({
+        memberId: user.userId + '',
+        mood: mood,
+        assistant: character,
+        file: sound,
+      });
       console.log(sound);
     }
   }, [audioUrl]);

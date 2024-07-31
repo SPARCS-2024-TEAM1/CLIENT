@@ -3,31 +3,27 @@
 import { client } from '../../../utils/apis/axios';
 
 export interface postTodayFeelingType {
-  memberId: number;
+  memberId: string;
   mood: string;
   assistant: string;
-  file: string;
+  file: File | undefined;
 }
 
 export const postTodayFeeling = async ({ memberId, mood, assistant, file }: postTodayFeelingType) => {
   const formData = new FormData();
-  formData.append('audioFile', file);
+  if (file !== undefined) {
+    formData.append('memberId', memberId + '');
+    formData.append('mood', mood);
+    formData.append('assistant', assistant);
+    formData.append('file', file);
+  }
 
   try {
-    const response = await client.post(
-      `/api/v1/diary`,
-      {
-        memberId: memberId,
-        mood: mood,
-        assistant: assistant,
-        file: formData,
+    const response = await client.post(`/api/v1/diary`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      },
-    );
+    });
 
     console.log(response);
     return response.data;

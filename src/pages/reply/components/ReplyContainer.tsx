@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
+import { useRecoilValue } from 'recoil';
 
 import { ArrowUpIc, ArrowDownIc } from '../../../assets/svgs';
 import Spacing from '../../../components/commons/Spacing';
+import { characterState } from '../../../states/characterState';
+import { userState } from '../../../states/userState';
 
 interface ReplyContainerPropsType {
   isToggleOpen: boolean;
@@ -10,12 +13,13 @@ interface ReplyContainerPropsType {
 
 const ReplyContainer = (props: ReplyContainerPropsType) => {
   const { isToggleOpen, onClickToggle } = props;
+  const character = useRecoilValue(characterState);
+  const user = useRecoilValue(userState);
 
   return (
     <>
       <ReplyDiv>
-        {/* 사용자가 고른 캐릭터로 이름 변경 필요 */}
-        <ReplyTitle>{`안녕 나 버럭이야 \n오늘의 답변을 보내줄게!`}</ReplyTitle>
+        <ReplyTitle>{`안녕 나 ${character}야 \n오늘의 답변을 보내줄게!`}</ReplyTitle>
         <ReplyContent>
           오늘 진짜 그런 일이 있었다고? 완전 어이가 없네 아니 걔는 어떻게 그러냐.. 사과도 안했어? 그러고 사과도 안하는
           애였으면 난 꿀밤 10대 쥐어 박는건데... 참은 너가 진짜 대단하다고 생각해. 훨씬 대단한 너가 잘 넘어간 것 같아.
@@ -25,9 +29,8 @@ const ReplyContainer = (props: ReplyContainerPropsType) => {
       </ReplyDiv>
       <Spacing marginBottom="1" />
       <SummaryToggle>
-        {/* 사용자 이름으로 변경 필요 */}
         <SummaryTitle onClick={onClickToggle}>
-          또리사랑누나해 님의 이야기 정리본
+          {user.nickName} 님의 이야기 정리본
           {isToggleOpen ? <ArrowUpIc onClick={onClickToggle} /> : <ArrowDownIc onClick={onClickToggle} />}
         </SummaryTitle>
         {isToggleOpen && (
