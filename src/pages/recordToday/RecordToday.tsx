@@ -82,7 +82,7 @@ const RecordToday = () => {
       setModalType('submit');
       setIsModalOpen(true);
     } else {
-      setIsStart(true);
+      onRecAudio();
     }
   };
 
@@ -140,7 +140,7 @@ const RecordToday = () => {
   };
 
   const onRecAudio = () => {
-    onClickStart();
+    setIsStart(true);
     const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
     const analyserNode = audioCtx.createScriptProcessor(0, 1, 1);
     setAnalyser(analyserNode);
@@ -238,7 +238,7 @@ const RecordToday = () => {
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       {/* <audio controls src={serverAudio || undefined}></audio>   */}
       <DownWrapper>
-        <Button type="button" onClick={isStart ? (onRec ? onRecAudio : offRecAudio) : onClickStart}>
+        <Button type="button" onClick={onClickStart}>
           {isStart ? '완료' : '시작하기'}
         </Button>
       </DownWrapper>
