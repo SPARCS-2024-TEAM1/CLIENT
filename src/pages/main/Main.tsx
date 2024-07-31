@@ -5,11 +5,11 @@ import { useRecoilValue } from 'recoil';
 import FullBtn from '../../components/commons/FullBtn';
 import Spacing from '../../components/commons/Spacing';
 import Title from '../../components/commons/Title';
-import { nicknameState } from '../../states/nicknameState';
+import { userState } from '../../states/userState';
 
 const Main = () => {
   const navigate = useNavigate();
-  const nickname = useRecoilValue(nicknameState);
+  const user = useRecoilValue(userState);
 
   const onClickRecordToday = () => {
     navigate('/todayFeeling');
@@ -20,7 +20,7 @@ const Main = () => {
   };
   return (
     <>
-      <Title text={`${nickname} 님의\n감정 기록 공간`} type="head" paddingTop={8} align="center" />
+      <Title text={`${user.nickName} 님의\n감정 기록 공간`} type="head" paddingTop={8} align="center" />
       <Spacing marginBottom="2.3" />
       <ImgDiv />
       <Spacing marginBottom="1.6" />

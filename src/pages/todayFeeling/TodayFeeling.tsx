@@ -10,13 +10,13 @@ import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import Title from '../../components/commons/Title';
 import { moodState } from '../../states/moodState';
-import { nicknameState } from '../../states/nicknameState';
+import { userState } from '../../states/userState';
 
 const TodayFeeling = () => {
   const navigate = useNavigate();
   const [feelingArr, setFeelingArr] = useState(Array(9).fill(false));
   const [selectedFeeling, setSelectedFeeling] = useState('');
-  const nickname = useRecoilValue(nicknameState);
+  const user = useRecoilValue(userState);
   const setMoodState = useSetRecoilState(moodState);
 
   const onClickBack = () => {
@@ -37,7 +37,7 @@ const TodayFeeling = () => {
   return (
     <>
       <Header LeftSvg={ArrowLeftIc} onClickLeft={onClickBack} />
-      <Title text={`${nickname} 님\n오늘 기분은 어떠신가요?`} type="middle" align="center" />
+      <Title text={`${user.nickName} 님\n오늘 기분은 어떠신가요?`} type="middle" align="center" />
       <Spacing marginBottom="5.197" />
       {/* 실제 상수 데이터로 바꿔야 함 */}
       <FeelingContainer>

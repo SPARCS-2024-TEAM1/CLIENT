@@ -9,12 +9,12 @@ interface postVerifyCodeType {
 
 export const postVerifyCode = async ({ phoneNumber, verificationCode }: postVerifyCodeType) => {
   try {
-    const { data } = await client.post(`/api/v1/phone/verification`, {
+    const response = await client.post(`/api/v1/phone/verification`, {
       phoneNumber: phoneNumber,
       verificationCode: verificationCode,
     });
-    console.log(data);
-    return data;
+    console.log(response);
+    return response.data;
   } catch (err) {
     console.error('문자인증번호 유효성 에러: ', err);
   }

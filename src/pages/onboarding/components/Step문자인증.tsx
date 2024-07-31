@@ -9,7 +9,7 @@ import Header from '../../../components/commons/Header';
 import Input from '../../../components/commons/Input';
 import Spacing from '../../../components/commons/Spacing';
 import Title from '../../../components/commons/Title';
-import { phoneNumberState } from '../../../states/phoneNumberState';
+import { userState } from '../../../states/userState';
 import { usePostPhoneNumber, usePostVerifyCode } from '../hooks/queries';
 import { formatTime } from '../utils/formatTime';
 
@@ -17,15 +17,15 @@ const Step문자인증 = () => {
   const navigate = useNavigate();
   const [authCode, setAuthCode] = useState('');
   const [isValid, setIsValid] = useState<boolean | undefined>();
-  const phoneNumber = useRecoilValue(phoneNumberState);
+  const user = useRecoilValue(userState);
 
-  const { mutate: postPhoneNumber } = usePostPhoneNumber(phoneNumber);
+  const { mutate: postPhoneNumber } = usePostPhoneNumber(user.phoneNumber);
   const {
     mutate: postVerifyCode,
     data,
     isSuccess,
   } = usePostVerifyCode({
-    phoneNumber: phoneNumber,
+    phoneNumber: user.phoneNumber,
     verificationCode: authCode,
   });
 
@@ -70,9 +70,7 @@ const Step문자인증 = () => {
   useEffect(() => {
     if (isSuccess) {
       setIsValid(true);
-      navigate('/onboarding/3', {
-        state: { phoneNumber: phoneNumber },
-      });
+      navigate('/onboarding/3');
     }
   }, [isSuccess]);
 

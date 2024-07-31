@@ -2,12 +2,14 @@
 import styled from '@emotion/styled';
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import { BtnCloseModal } from './components/Modal';
 import { ArrowLeftIc, RestartIc } from '../../assets/svgs';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import Title from '../../components/commons/Title';
+import { characterState } from '../../states/characterState';
 
 const RecordToday = () => {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ const RecordToday = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
   const [timeLeft, setTimeLeft] = useState(30);
+  const character = useRecoilValue(characterState);
 
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [media, setMedia] = useState<MediaRecorder | null>(null);
@@ -212,7 +215,12 @@ const RecordToday = () => {
   return (
     <>
       <Header LeftSvg={ArrowLeftIc} onClickLeft={onClickBack} />
-      <Title text={`버럭이한테 하고싶은 얘기를\n30초 동안 말해볼까요?`} type="title" align="center" paddingTop={9.45} />
+      <Title
+        text={`${character}한테 하고싶은 얘기를\n30초 동안 말해볼까요?`}
+        type="title"
+        align="center"
+        paddingTop={9.45}
+      />
       <Spacing marginBottom="4.035" />
 
       <RecordWrapper>

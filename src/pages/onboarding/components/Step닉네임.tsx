@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useState, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { ArrowLeftIc } from '../../../assets/svgs';
 import FullBtn from '../../../components/commons/FullBtn';
@@ -9,15 +9,13 @@ import Header from '../../../components/commons/Header';
 import Input from '../../../components/commons/Input';
 import Spacing from '../../../components/commons/Spacing';
 import Title from '../../../components/commons/Title';
-import { nicknameState } from '../../../states/nicknameState';
-import { phoneNumberState } from '../../../states/phoneNumberState';
+import { userState, userStateType } from '../../../states/userState';
 import { usePostSignup } from '../hooks/queries';
 
 const Step닉네임 = () => {
   const navigate = useNavigate();
   const [nickNameVal, setNickNameVal] = useState('');
-  const phoneNumber = useRecoilValue(phoneNumberState);
-  const setNicknameState = useSetRecoilState(nicknameState);
+  const [user, setUserState] = useRecoilState(userState);
 
   const {
     mutate: postSignup,
@@ -25,7 +23,7 @@ const Step닉네임 = () => {
     isSuccess,
   } = usePostSignup({
     nickname: nickNameVal,
-    phoneNumber: phoneNumber,
+    phoneNumber: user.phoneNumber,
   });
 
   const onClickBack = () => {
@@ -38,7 +36,10 @@ const Step닉네임 = () => {
 
   const onClickNicknameSubmit = () => {
     postSignup();
-    setNicknameState(nickNameVal);
+    setUserState((prev: userStateType) => ({
+      ...prev,
+      nickName: nickNameVal,
+    }));
   };
 
   useEffect(() => {
