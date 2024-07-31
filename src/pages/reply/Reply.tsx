@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
@@ -17,14 +17,26 @@ const Reply = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const saveRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const [isToggleOpen, setIsToggleOpen] = useState(true);
-  const [isPlayClicked, setIsPlayClicked] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const character = useRecoilValue(characterState);
   const moodDiaryId = useRecoilValue(todayMoodDiaryIdState);
 
   const { mutate: postAiAudio, isSuccess, data } = usePostAiAudio(Number(moodDiaryId));
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      const url = URL.createObjectURL(data);
+      const audioPlayer = audioRef.current;
+      if (audioPlayer) {
+        audioPlayer.src = url;
+        audioPlayer.play();
+      }
+    }
+  }, [isSuccess, data]);
 
   const SUMMARY_LIST = location.state.summary;
   const answer = location.state.answer;
@@ -56,9 +68,28 @@ const Reply = () => {
 
   // 오디오 실행
   const onClickReplyVid = () => {
-    setIsPlayClicked(!isPlayClicked);
-    postAiAudio();
+    const audioPlayer = audioRef.current;
+    if (audioPlayer) {
+      postAiAudio();
+    }
   };
+
+  useEffect(() => {
+    const audioPlayer = audioRef.current;
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    if (audioPlayer) {
+      audioPlayer.addEventListener('play', handlePlay);
+      audioPlayer.addEventListener('pause', handlePause);
+
+      // Clean up event listeners on unmount
+      return () => {
+        audioPlayer.removeEventListener('play', handlePlay);
+        audioPlayer.removeEventListener('pause', handlePause);
+      };
+    }
+  }, []);
 
   return (
     <Wrapper $isToggleOpen={isToggleOpen}>
@@ -66,7 +97,9 @@ const Reply = () => {
         <ReplyImg>
           {character === '동글이' && <ReplyCompleteDgIcon />}
           {character === '뾰족이' && <ReplyCompletePjIcon />}
-          {isPlayClicked ? <ReplyPauseIcon onClick={onClickReplyVid} /> : <ReplyPlayIcon onClick={onClickReplyVid} />}
+          {isPlaying ? <ReplyPauseIcon onClick={onClickReplyVid} /> : <ReplyPlayIcon onClick={onClickReplyVid} />}
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+          <Audio id="audioPlayer" controls ref={audioRef}></Audio>
         </ReplyImg>
         <ReplyContainer
           isToggleOpen={isToggleOpen}
@@ -123,17 +156,6 @@ const ReplyCompleteDgIcon = styled(ReplyCompleteDgIc)`
   bottom: -2rem;
 `;
 
-const ReplyVideo = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-
-  width: 13.2rem;
-  height: 11.4rem;
-
-  background-color: ${({ theme }) => theme.colors.key};
-`;
-
 const ReplyPlayIcon = styled(ReplyPlayIc)`
   position: absolute;
   right: 0;
@@ -144,4 +166,8 @@ const ReplyPauseIcon = styled(ReplyPauseIc)`
   position: absolute;
   right: 0;
   bottom: 0;
+`;
+
+const Audio = styled.audio`
+  display: none;
 `;
