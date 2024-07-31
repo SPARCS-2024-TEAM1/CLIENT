@@ -9,10 +9,12 @@ import { userState } from '../../../states/userState';
 interface ReplyContainerPropsType {
   isToggleOpen: boolean;
   onClickToggle: () => void;
+  answer: string;
+  summary: string[];
 }
 
 const ReplyContainer = (props: ReplyContainerPropsType) => {
-  const { isToggleOpen, onClickToggle } = props;
+  const { isToggleOpen, onClickToggle, answer, summary } = props;
   const character = useRecoilValue(characterState);
   const user = useRecoilValue(userState);
 
@@ -20,12 +22,7 @@ const ReplyContainer = (props: ReplyContainerPropsType) => {
     <>
       <ReplyDiv>
         <ReplyTitle>{`안녕 나 ${character}야 \n오늘의 답변을 보내줄게!`}</ReplyTitle>
-        <ReplyContent>
-          오늘 진짜 그런 일이 있었다고? 완전 어이가 없네 아니 걔는 어떻게 그러냐.. 사과도 안했어? 그러고 사과도 안하는
-          애였으면 난 꿀밤 10대 쥐어 박는건데... 참은 너가 진짜 대단하다고 생각해. 훨씬 대단한 너가 잘 넘어간 것 같아.
-          하지만 다음에 또 그러면 확실히 한마디 해 ! 오늘 진짜 그런 일이 있었다고? 완전 어이가 없네 아니 걔는 어떻게
-          그러냐.. 사과도 안했어? 그러고 사과도 안하는 애였으면 난 꿀밤 10대 쥐어 박는건데...
-        </ReplyContent>
+        <ReplyContent>{answer}</ReplyContent>
       </ReplyDiv>
       <Spacing marginBottom="1" />
       <SummaryToggle>
@@ -35,22 +32,9 @@ const ReplyContainer = (props: ReplyContainerPropsType) => {
         </SummaryTitle>
         {isToggleOpen && (
           <ContentWrapper>
-            <SummaryContent>
-              다음 달 1일부터 00 등 소주 제품 공장 출고가격이 인상된다. - 공장 출고가 이렇게 인상되면서 소매점과 식당의
-              가격인상이 불가피해질 전망이다.
-            </SummaryContent>
-            <SummaryContent>
-              다음 달 1일부터 00 등 소주 제품 공장 출고가격이 인상된다. - 공장 출고가 이렇게 인상되면서 소매점과 식당의
-              가격인상이 불가피해질 전망이다.
-            </SummaryContent>
-            <SummaryContent>
-              다음 달 1일부터 00 등 소주 제품 공장 출고가격이 인상된다. - 공장 출고가 이렇게 인상되면서 소매점과 식당의
-              가격인상이 불가피해질 전망이다.
-            </SummaryContent>
-            <SummaryContent>
-              다음 달 1일부터 00 등 소주 제품 공장 출고가격이 인상된다. - 공장 출고가 이렇게 인상되면서 소매점과 식당의
-              가격인상이 불가피해질 전망이다.
-            </SummaryContent>
+            {summary.map((sentence) => (
+              <SummaryContent key={Math.random().toString(36).slice(2, 11)}>{sentence}</SummaryContent>
+            ))}
           </ContentWrapper>
         )}
       </SummaryToggle>

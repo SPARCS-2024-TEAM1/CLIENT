@@ -8,17 +8,25 @@ interface AutoCloseModalPropType {
   handleShowModal: (type: boolean) => void;
   children: React.ReactNode;
   path?: string;
+  summary?: string[];
+  answer?: string;
 }
 
 export const AutoCloseModal = (props: AutoCloseModalPropType) => {
   const navigate = useNavigate();
-  const { text, showModal, handleShowModal, children, path } = props;
+  const { text, showModal, handleShowModal, children, path, summary, answer = '' } = props;
 
   useEffect(() => {
     if (showModal) {
       const timer = setTimeout(() => {
         handleShowModal(false);
-        path && navigate(`${path}`);
+        path &&
+          navigate(`${path}`, {
+            state: {
+              summary: summary,
+              answer: answer,
+            },
+          });
       }, 2000);
 
       return () => clearTimeout(timer);

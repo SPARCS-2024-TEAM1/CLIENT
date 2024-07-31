@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import ReplyContainer from './components/ReplyContainer';
 import ReplyImg from './components/ReplyImg';
@@ -12,7 +12,11 @@ import TwoBtn from '../../components/commons/TwoBtn';
 const Reply = () => {
   const [isToggleOpen, setIsToggleOpen] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
   const saveRef = useRef(null);
+
+  const SUMMARY_LIST = location.state.summary;
+  const answer = location.state.answer;
 
   const onClickToHome = () => {
     navigate('/main');
@@ -43,7 +47,12 @@ const Reply = () => {
     <Wrapper $isToggleOpen={isToggleOpen}>
       <SaveImgWrapper ref={saveRef}>
         <ReplyImg />
-        <ReplyContainer isToggleOpen={isToggleOpen} onClickToggle={onClickToggle} />
+        <ReplyContainer
+          isToggleOpen={isToggleOpen}
+          onClickToggle={onClickToggle}
+          answer={answer}
+          summary={SUMMARY_LIST}
+        />
       </SaveImgWrapper>
       <TwoBtn
         leftText="홈으로 가기"

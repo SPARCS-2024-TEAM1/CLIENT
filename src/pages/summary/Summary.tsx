@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 
 import Loading from './components/Loading';
 import { AutoCloseModal } from './components/Modal';
+import { usePostChatbotReply } from './hooks/queries';
 import { getTodayData } from './utils/getTodayData';
 import { SummaryIc, ArrowLeftIc } from '../../assets/svgs';
 import ButtonBg from '../../components/commons/ButtonBg';
@@ -13,20 +14,24 @@ import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
 import Title from '../../components/commons/Title';
 import { characterState } from '../../states/characterState';
+import { todayMoodDiaryIdState } from '../../states/todayMoodDiaryIdState';
 import { userState } from '../../states/userState';
 
 const Summary = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [onSuccess, setOnSuccess] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [onSuccess, setOnSuccess] = useState(false);
   const user = useRecoilValue(userState);
   const character = useRecoilValue(characterState);
+  const moodDiaryId = useRecoilValue(todayMoodDiaryIdState);
 
-  const summary = location.state.summary;
-  const SUMMARY_LIST = summary.split('\n').map((text: string) => text.replace(/^- /, ''));
+  const lastSummary = location.state.summary;
+  const SUMMARY_LIST = lastSummary.split('\n').map((text: string) => text.replace(/^- /, ''));
+
+  const { mutate: postChatbotReply, isSuccess, answer, isPending } = usePostChatbotReply(Number(moodDiaryId));
 
   // axios 결과값 받아오기
-  const isLoading = false;
   const handleShowModal = (type: boolean) => {
     setOnSuccess(type);
   };
@@ -35,16 +40,22 @@ const Summary = () => {
     navigate('/character');
   };
 
-  if (isLoading) {
+  const handlePostReplyBtn = () => {
+    postChatbotReply();
+  };
+
+  if (isPending) {
     return (
       <>
         <Loading />
-        {onSuccess && (
+        {isSuccess && (
           <AutoCloseModal
             text={`답장이 완성되었어요! \n읽으러 가볼까요?`}
-            showModal={onSuccess}
+            showModal={isSuccess}
             path="/reply"
-            handleShowModal={handleShowModal}>
+            handleShowModal={handleShowModal}
+            summary={SUMMARY_LIST}
+            answer={answer}>
             <ModalImg />
           </AutoCloseModal>
         )}
@@ -75,7 +86,12 @@ const Summary = () => {
         <SummaryIcon />
       </SummaryWrapper>
       {/* api쏘는 함수 연결 필요 */}
-      <FullBtn activeText={`${character}에게 답장받기`} btnColorType="gray" isBtnDisable={false} />
+      <FullBtn
+        activeText={`${character}에게 답장받기`}
+        btnColorType="gray"
+        isBtnDisable={false}
+        onClick={handlePostReplyBtn}
+      />
       <ButtonBg />
     </Wrapper>
   );

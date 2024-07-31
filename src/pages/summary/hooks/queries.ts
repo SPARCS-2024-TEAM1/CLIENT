@@ -7,7 +7,7 @@ export const QUERY_KEY_SUMMARY = {
 };
 
 export const usePostChatbotReply = (moodDiaryId: number) => {
-  const { mutate, isSuccess, data } = useMutation({
+  const { mutate, isSuccess, isPending, data } = useMutation({
     mutationKey: [QUERY_KEY_SUMMARY.postChatbotReply, moodDiaryId],
     mutationFn: () => postChatbotReply(moodDiaryId),
   });
@@ -16,5 +16,5 @@ export const usePostChatbotReply = (moodDiaryId: number) => {
   const answer = data?.data?.answer;
   const summary = data?.data?.summary;
 
-  return { mutate, isSuccess, memberId, answer, summary };
+  return { mutate, isSuccess, memberId, answer, summary, isPending };
 };
