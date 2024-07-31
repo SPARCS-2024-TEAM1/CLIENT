@@ -67,3 +67,7 @@ export { default as MainIc } from './img_main.svg?react';
 // 재생 이미지
 export { default as ReplyPlayIc } from './img_reply_play.svg?react';
 export { default as ReplyPauseIc } from './img_reply_pause.svg?react';
+
+// 로고
+export { default as LogoIc } from './img_splash_logo.svg?react';
+export { default as SplashBigIc } from './img_splash_big.svg?react';
