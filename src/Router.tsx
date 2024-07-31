@@ -9,6 +9,7 @@ import Step닉네임 from './pages/onboarding/components/Step닉네임';
 import Step문자인증 from './pages/onboarding/components/Step문자인증';
 import Step핸드폰번호입력 from './pages/onboarding/components/Step핸드폰번호입력';
 import RecordToday from './pages/recordToday/RecordToday';
+// import RecordToday from './pages/recordToday/RecordTodayTest';
 import Reply from './pages/reply/Reply';
 import Summary from './pages/summary/Summary';
 import TodayFeeling from './pages/todayFeeling/TodayFeeling';
