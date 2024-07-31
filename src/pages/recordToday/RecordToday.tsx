@@ -16,6 +16,7 @@ import { characterState } from '../../states/characterState';
 import { moodState } from '../../states/moodState';
 import { todayMoodDiaryIdState } from '../../states/todayMoodDiaryIdState';
 import { userState } from '../../states/userState';
+import Loading from '../summary/components/Loading';
 
 const RecordToday = () => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const RecordToday = () => {
     }
   }, []);
 
-  const { mutate: postTodayFeeling, isSuccess, moodDiaryId, summary } = usePostTodayFeeling();
+  const { mutate: postTodayFeeling, isSuccess, moodDiaryId, summary, isPending } = usePostTodayFeeling();
   console.log(onRec);
   // 뒤로가기 눌렀을 때 열리는 모달
   const onClickBack = () => {
@@ -282,6 +283,10 @@ const RecordToday = () => {
       }
     };
   }, [audioUrl]);
+
+  if (isPending) {
+    return <Loading type="summary" />;
+  }
 
   return (
     <>

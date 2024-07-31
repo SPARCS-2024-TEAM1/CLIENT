@@ -67,7 +67,7 @@ const Summary = () => {
   if (isPending) {
     return (
       <>
-        <Loading />
+        <Loading type="reply" />
         {isComplete && (
           <AutoCloseModal
             text={`답장이 완성되었어요! \n읽으러 가볼까요?`}
@@ -86,7 +86,7 @@ const Summary = () => {
   if (isComplete) {
     return (
       <>
-        <Loading />
+        <Loading type="reply" />
         <AutoCloseModal
           text={`답장이 완성되었어요! \n읽으러 가볼까요?`}
           showModal={isComplete}

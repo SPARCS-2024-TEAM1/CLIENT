@@ -8,7 +8,7 @@ export const QUERY_KEY_RECORD_TODAY = {
 
 // 음성 보내면 요약본 주는 post
 export const usePostTodayFeeling = () => {
-  const { mutate, isSuccess, data } = useMutation({
+  const { mutate, isSuccess, data, isPending } = useMutation({
     mutationKey: [QUERY_KEY_RECORD_TODAY.postTodayFeeling],
     mutationFn: ({ memberId, mood, assistant, file }: postTodayFeelingType) =>
       postTodayFeeling({ memberId, mood, assistant, file }),
@@ -17,5 +17,5 @@ export const usePostTodayFeeling = () => {
   const moodDiaryId = data?.data?.moodDiaryId;
   const summary = data?.data?.summary;
 
-  return { mutate, isSuccess, data, moodDiaryId, summary };
+  return { mutate, isSuccess, data, moodDiaryId, summary, isPending };
 };
