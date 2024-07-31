@@ -35,7 +35,7 @@ const RecordToday = () => {
   const [serverAudio, setServerAudio] = useState<string | null>(null);
 
   const { mutate: postTodayFeeling, isSuccess } = usePostTodayFeeling();
-
+  console.log(onRec);
   // 뒤로가기 눌렀을 때 열리는 모달
   const onClickBack = () => {
     if (isStart) {
