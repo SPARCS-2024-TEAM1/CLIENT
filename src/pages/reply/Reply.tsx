@@ -3,17 +3,22 @@ import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
 import { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import ReplyContainer from './components/ReplyContainer';
-import ReplyImg from './components/ReplyImg';
+import { ReplyCompletePjIc, ReplyCompleteDgIc } from '../../assets/svgs';
 import ButtonBg from '../../components/commons/ButtonBg';
 import TwoBtn from '../../components/commons/TwoBtn';
+import { characterState } from '../../states/characterState';
 
 const Reply = () => {
-  const [isToggleOpen, setIsToggleOpen] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   const saveRef = useRef(null);
+
+  const [isToggleOpen, setIsToggleOpen] = useState(true);
+
+  const character = useRecoilValue(characterState);
 
   const SUMMARY_LIST = location.state.summary;
   const answer = location.state.answer;
@@ -46,7 +51,8 @@ const Reply = () => {
   return (
     <Wrapper $isToggleOpen={isToggleOpen}>
       <SaveImgWrapper ref={saveRef}>
-        <ReplyImg />
+        {character === '동글이' && <ReplyCompleteDgIcon />}
+        {character === '뾰족이' && <ReplyCompletePjIcon />}
         <ReplyContainer
           isToggleOpen={isToggleOpen}
           onClickToggle={onClickToggle}
@@ -78,4 +84,16 @@ const SaveImgWrapper = styled.div`
   padding: 0 2rem 2rem;
 
   background-color: ${({ theme }) => theme.colors.grayScaleBg};
+`;
+
+const ReplyCompletePjIcon = styled(ReplyCompletePjIc)`
+  position: absolute;
+  top: 5.6rem;
+  left: 2rem;
+`;
+
+const ReplyCompleteDgIcon = styled(ReplyCompleteDgIc)`
+  position: absolute;
+  top: 5.6rem;
+  left: 2rem;
 `;

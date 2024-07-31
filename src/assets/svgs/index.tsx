@@ -42,3 +42,7 @@ export { default as RecordJoyIc } from './img_record_joy.svg?react';
 export { default as RecordLonelinessIc } from './img_record_loneliness.svg?react';
 export { default as RecordSadnessIc } from './img_record_sadness.svg?react';
 export { default as RecordStressIc } from './img_record_stress.svg?react';
+
+// 응답 위에 있는 애들
+export { default as ReplyCompleteDgIc } from './img_replycomplete_dg.svg?react';
+export { default as ReplyCompletePjIc } from './img_replycomplete_pj.svg?react';
