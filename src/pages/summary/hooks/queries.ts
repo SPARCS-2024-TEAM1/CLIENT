@@ -1,21 +1,20 @@
-import { useQuery } from '@tanstack/react-query';
-// import { useMutation,useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
-import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
+import { postChatbotReply } from '../apis/postChatbotReply';
 
-export const QUERY_KEY_MAIN = {
-  getTempSaveContent: 'getTempSaveContent',
+export const QUERY_KEY_SUMMARY = {
+  postChatbotReply: 'postChatbotReply',
 };
 
-// 임시저장 불러오기 GET
-export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) => {
-  const { data } = useQuery({
-    queryKey: [QUERY_KEY_MAIN.getTempSaveContent, postId],
-    queryFn: () => fetchTempSaveContent(postId),
-    enabled: !!isTempClicked,
+export const usePostChatbotReply = (moodDiaryId: number) => {
+  const { mutate, isSuccess, data } = useMutation({
+    mutationKey: [QUERY_KEY_SUMMARY.postChatbotReply, moodDiaryId],
+    mutationFn: () => postChatbotReply(moodDiaryId),
   });
 
-  const tempTopicList = data && data?.data?.topicList;
+  const memberId = data?.data?.memberId;
+  const answer = data?.data?.answer;
+  const summary = data?.data?.summary;
 
-  return { tempTopicList };
+  return { mutate, isSuccess, memberId, answer, summary };
 };
