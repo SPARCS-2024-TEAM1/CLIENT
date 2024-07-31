@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from '@emotion/styled';
-import { useState, useCallback, useEffect } from 'react';
+import Lottie from 'lottie-web';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { BtnCloseModal } from './components/Modal';
 import { usePostTodayFeeling } from './hooks/queries';
+import LottieSpeaking from '../../assets/lottie/lottie_speaking.json';
 import { ArrowLeftIc, RestartIc } from '../../assets/svgs';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
@@ -35,6 +37,24 @@ const RecordToday = () => {
   const [analyser, setAnalyser] = useState<ScriptProcessorNode | null>(null);
   const [audioUrl, setAudioUrl] = useState<Blob | null>(null);
   const [serverAudio, setServerAudio] = useState<string | null>(null);
+
+  // lottie
+  const lottieContainer = useRef<HTMLDivElement>(null!);
+  useEffect(() => {
+    if (lottieContainer.current !== null) {
+      const animation = Lottie.loadAnimation({
+        container: lottieContainer.current,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        animationData: LottieSpeaking,
+      });
+
+      return () => {
+        animation.destroy();
+      };
+    }
+  }, []);
 
   const { mutate: postTodayFeeling, isSuccess, moodDiaryId, summary } = usePostTodayFeeling();
   console.log(onRec);
@@ -274,7 +294,7 @@ const RecordToday = () => {
       />
       <Spacing marginBottom="4.035" />
       <RecordWrapper>
-        <RecordTempImg />
+        <RecordImg ref={lottieContainer}></RecordImg>
         <Timer>{`00:${timeLeft < 10 ? `0${timeLeft}` : timeLeft}`}</Timer>
         <Spacing marginBottom="3.215" />
         <ResetDiv onClick={onClickResetBtn}>
@@ -308,11 +328,9 @@ const RecordWrapper = styled.div`
   width: 100%;
 `;
 
-const RecordTempImg = styled.div`
+const RecordImg = styled.div`
   width: 22rem;
   height: 16rem;
-
-  background-color: ${({ theme }) => theme.colors.key};
 `;
 
 const Timer = styled.div`

@@ -9,6 +9,7 @@ const Home = () => {
   const onClickNext = () => {
     navigate('/onboarding/1');
   };
+
   return (
     <>
       <Title text={`입시생들의 속마음을\n들어주고 답변해주는 공간`} type="title" paddingTop={20.3} align="center" />
