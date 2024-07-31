@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from '@emotion/styled';
+import { saveAs } from 'file-saver';
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -50,6 +51,7 @@ const RecordToday = () => {
   // 뒤로가기 누르고 모달 열린 후 나가기(오른쪽 버튼) 눌렀을 경우
   const onClickBackModalRight = () => {
     navigate('/character');
+    setAudioUrl(null); // 녹음 파일 초기화
   };
 
   // 초기화하기 눌렀을 때
@@ -58,6 +60,7 @@ const RecordToday = () => {
   // 사용자가 제출눌렀을 때 뜨는 모달 다시할게요 (왼쪽버튼) 눌렀을 경우
   const onClickResetBtn = () => {
     offRecAudio();
+    setAudioUrl(null); // 녹음 파일 초기화
     setIsModalOpen(false);
     setIsStart(false);
     setTimeLeft(30);
@@ -77,11 +80,15 @@ const RecordToday = () => {
   const onClickSubmit = () => {
     // 서버에 제출하는 로직
     onSubmitAudioFile();
+
+    setTimeLeft(30);
+    setIsStart(false);
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
     if (isSuccess) {
-      navigate('/summary');
+      // navigate('/summary');
     }
   }, [isSuccess]);
 
@@ -94,6 +101,7 @@ const RecordToday = () => {
       setIsModalOpen(true);
     } else {
       onRecAudio();
+      setIsStart(true);
     }
   };
 
@@ -150,78 +158,161 @@ const RecordToday = () => {
     };
   };
 
+  // const onRecAudio = () => {
+  //   setIsStart(true);
+  //   const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+  //   const analyserNode = audioCtx.createScriptProcessor(0, 1, 1);
+  //   setAnalyser(analyserNode);
+
+  //   const makeSound = (stream: MediaStream) => {
+  //     const sourceNode = audioCtx.createMediaStreamSource(stream);
+  //     setSource(sourceNode);
+  //     sourceNode.connect(analyserNode);
+  //     analyserNode.connect(audioCtx.destination);
+  //   };
+
+  //   navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+  //     const mediaRecorder = new MediaRecorder(stream);
+  //     mediaRecorder.start();
+  //     setStream(stream);
+  //     setMedia(mediaRecorder);
+  //     makeSound(stream);
+
+  //     analyserNode.onaudioprocess = function (e) {
+  //       if (e.playbackTime > 30) {
+  //         stream.getAudioTracks().forEach((track) => {
+  //           track.stop();
+  //         });
+  //         mediaRecorder.stop();
+  //         analyserNode.disconnect();
+  //         audioCtx.createMediaStreamSource(stream).disconnect();
+
+  //         mediaRecorder.ondataavailable = function (e) {
+  //           setAudioUrl(e.data);
+  //           setOnRec(true);
+  //         };
+  //       } else {
+  //         setOnRec(false);
+  //       }
+  //     };
+  //   });
+  // };
+
   const onRecAudio = () => {
-    setIsStart(true);
-    const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const analyserNode = audioCtx.createScriptProcessor(0, 1, 1);
-    setAnalyser(analyserNode);
+    // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
+    const audioCtx = new (window.AudioContext || window.AudioContext)();
 
-    const makeSound = (stream: MediaStream) => {
-      const sourceNode = audioCtx.createMediaStreamSource(stream);
-      setSource(sourceNode);
-      sourceNode.connect(analyserNode);
-      analyserNode.connect(audioCtx.destination);
-    };
+    // 자바스크립트를 통해 음원의 진행상태에 직접접근에 사용된다.
+    const analyser = audioCtx.createScriptProcessor(0, 1, 1);
+    setAnalyser(analyser);
 
-    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-      const mediaRecorder = new MediaRecorder(stream);
-      mediaRecorder.start();
-      setStream(stream);
-      setMedia(mediaRecorder);
-      makeSound(stream);
+    function makeSound(stream: MediaStream) {
+      // 내 컴퓨터의 마이크나 다른 소스를 통해 발생한 오디오 스트림의 정보를 보여준다.
+      const source = audioCtx.createMediaStreamSource(stream);
+      setSource(source);
 
-      analyserNode.onaudioprocess = function (e) {
-        if (e.playbackTime > 30) {
-          stream.getAudioTracks().forEach((track) => {
-            track.stop();
-          });
-          mediaRecorder.stop();
-          analyserNode.disconnect();
-          audioCtx.createMediaStreamSource(stream).disconnect();
+      // AudioBufferSourceNode 연결
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+    }
 
-          mediaRecorder.ondataavailable = function (e) {
-            setAudioUrl(e.data);
-            setOnRec(true);
-          };
-        } else {
+    // 마이크 사용 권한 획득 후 녹음 시작
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream) => {
+        const mediaRecorder = new MediaRecorder(stream);
+
+        // dataavailable 이벤트 핸들러 등록
+        mediaRecorder.addEventListener('dataavailable', (e) => {
+          setAudioUrl(e.data);
+          setOnRec(true);
+        });
+
+        mediaRecorder.start();
+        setStream(stream);
+        setMedia(mediaRecorder);
+        makeSound(stream);
+        // 음성 녹음이 시작됐을 때 onRec state값을 false로 변경
+        analyser.onaudioprocess = function (e) {
           setOnRec(false);
-        }
-      };
-    });
+        };
+      })
+      .catch((error) => {
+        // 마이크 사용 권한을 받지 못했을 때 처리
+        alert('마이크 사용 권한을 허용해야 녹음을 진행할 수 있습니다.');
+      });
   };
+
+  // const offRecAudio = () => {
+  //   if (media && stream && analyser && source) {
+  //     media.ondataavailable = function (e) {
+  //       setAudioUrl(e.data);
+  //       setOnRec(true);
+  //     };
+
+  //     stream.getAudioTracks().forEach((track) => {
+  //       track.stop();
+  //     });
+
+  //     media.stop();
+  //     analyser.disconnect();
+  //     source.disconnect();
+  //   }
+  // };
 
   const offRecAudio = () => {
-    if (media && stream && analyser && source) {
-      media.ondataavailable = function (e) {
-        setAudioUrl(e.data);
-        setOnRec(true);
-      };
+    // dataavailable 이벤트로 Blob 데이터에 대한 응답을 받을 수 있음
+    media.ondataavailable = function (e) {
+      setAudioUrl(e.data);
+      setOnRec(true);
+    };
 
-      stream.getAudioTracks().forEach((track) => {
-        track.stop();
-      });
+    // 모든 트랙에서 stop()을 호출해 오디오 스트림을 정지
+    stream.getAudioTracks().forEach(function (track) {
+      track.stop();
+    });
 
-      media.stop();
-      analyser.disconnect();
-      source.disconnect();
-    }
+    // 미디어 캡처 중지
+    media.stop();
+
+    // 메서드가 호출 된 노드 연결 해제
+    analyser.disconnect();
+    source.disconnect();
   };
+
+  // const onSubmitAudioFile = useCallback(() => {
+  //   if (audioUrl) {
+  //     const audioURL = URL.createObjectURL(audioUrl);
+  //     setServerAudio(audioURL);
+  //   }
+
+  //   if (audioUrl) {
+  //     const sound = new File([audioUrl], 'todayFeelingRecord.mp3', {
+  //       lastModified: new Date().getTime(),
+  //       type: 'audio/mpeg',
+  //     });
+
+  //     saveAs(sound);
+
+  //     postTodayFeeling({
+  //       memberId: user.userId + '',
+  //       mood: mood,
+  //       assistant: character,
+  //       file: sound,
+  //     });
+  //     console.log(sound);
+  //   }
+  // }, [audioUrl]);
 
   const onSubmitAudioFile = useCallback(() => {
     if (audioUrl) {
-      const audioURL = URL.createObjectURL(audioUrl);
-      setServerAudio(audioURL);
-    }
-
-    if (audioUrl) {
-      const sound = new File([audioUrl], 'todayFeelingRecord', { lastModified: new Date().getTime(), type: 'audio' });
-      postTodayFeeling({
-        memberId: user.userId + '',
-        mood: mood,
-        assistant: character,
-        file: sound,
+      // const audio = new Audio(URL.createObjectURL(audioUrl));
+      const sound = new File([audioUrl], 'todayFeelingRecord', {
+        lastModified: new Date().getTime(),
+        type: 'audio/mpeg',
       });
-      console.log(sound);
+      saveAs(sound);
+      // audio.play();
     }
   }, [audioUrl]);
 
@@ -237,7 +328,6 @@ const RecordToday = () => {
         paddingTop={9.45}
       />
       <Spacing marginBottom="4.035" />
-
       <RecordWrapper>
         <RecordTempImg />
         <Timer>{`00:${timeLeft < 10 ? `0${timeLeft}` : timeLeft}`}</Timer>
@@ -247,17 +337,16 @@ const RecordToday = () => {
           <ResetText>초기화하기</ResetText>
         </ResetDiv>
       </RecordWrapper>
-
       {/* <button onClick={onRec ? onRecAudio : offRecAudio}>녹음</button>
       <button onClick={onSubmitAudioFile}>결과 확인</button>
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      {/* <audio controls src={serverAudio || undefined}></audio>   */}
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+      {/* <audio controls src={serverAudio || undefined}></audio> */}
       <DownWrapper>
         <Button type="button" onClick={onClickStart}>
           {isStart ? '완료' : '시작하기'}
         </Button>
       </DownWrapper>
-
       <BtnCloseModal isModalOpen={isModalOpen} {...getModalProps(modalType)} />
     </>
   );

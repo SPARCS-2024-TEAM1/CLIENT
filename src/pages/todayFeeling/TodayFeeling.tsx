@@ -46,8 +46,9 @@ const TodayFeeling = () => {
             key={feeling.id}
             onClick={() => onClickFeeling(feeling.id, feeling.feeling)}
             $isFeelingClicked={selectedFeeling !== ''}
-            $isSelected={feelingArr[feeling.id]}
-          />
+            $isSelected={feelingArr[feeling.id]}>
+            <feeling.defaultImg />
+          </FeelingBox>
         ))}
       </FeelingContainer>
       <FullBtn
@@ -73,7 +74,7 @@ const FeelingContainer = styled.section`
 `;
 
 const FeelingBox = styled.div<{ $isSelected: boolean; $isFeelingClicked: boolean }>`
-  background-color: ${({ theme }) => theme.colors.key};
+  /* background-color: ${({ theme }) => theme.colors.key}; */
 
   cursor: pointer;
   opacity: ${({ $isSelected, $isFeelingClicked }) => ($isFeelingClicked ? ($isSelected ? '' : '10%') : '')};
