@@ -63,3 +63,7 @@ export { default as ReplyStressIc } from './img_reply_stress.svg?react';
 
 // 메인페이지
 export { default as MainIc } from './img_main.svg?react';
+
+// 재생 이미지
+export { default as ReplyPlayIc } from './img_reply_play.svg?react';
+export { default as ReplyPauseIc } from './img_reply_pause.svg?react';

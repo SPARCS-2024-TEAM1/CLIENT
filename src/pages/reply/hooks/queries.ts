@@ -1,21 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
-// import { useMutation,useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
-import { fetchTempSaveContent } from '../apis/fetchTempSaveContent';
+import { postAiAudio } from '../apis/postAiAudio';
 
-export const QUERY_KEY_MAIN = {
-  getTempSaveContent: 'getTempSaveContent',
+export const QUERY_KEY_REPLY = {
+  postAiAudio: 'postAiAudio',
 };
 
-// 임시저장 불러오기 GET
-export const useGetTempSaveContent = (postId: string, isTempClicked: boolean) => {
-  const { data } = useQuery({
-    queryKey: [QUERY_KEY_MAIN.getTempSaveContent, postId],
-    queryFn: () => fetchTempSaveContent(postId),
-    enabled: !!isTempClicked,
+// ai 음성 파일 post
+export const usePostAiAudio = (moodDiaryId: number) => {
+  const { mutate, isSuccess, data } = useMutation({
+    mutationKey: [QUERY_KEY_REPLY.postAiAudio, moodDiaryId],
+    mutationFn: () => postAiAudio(moodDiaryId),
   });
 
-  const tempTopicList = data && data?.data?.topicList;
-
-  return { tempTopicList };
+  return { mutate, isSuccess, data };
 };
