@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 
 import LastMemoryBox from './components/LastMemoryBox';
 import { MEMORY_LIST } from './constants/constants';
-import { useGetRecordList } from './hooks/queries';
+import { useGetRecordList, useGetTodayList } from './hooks/queries';
 import {
   ArrowLeftIc,
   RecordEmptyIc,
@@ -22,6 +22,12 @@ import { userState } from '../../states/userState';
 import ReplyContainer from '../reply/components/ReplyContainer';
 import { usePostAiAudio } from '../reply/hooks/queries';
 
+interface moodDiaryType {
+  moodDiaryId: number;
+  diaryDate: string;
+  mood: string;
+}
+
 const Memory = () => {
   const navigate = useNavigate();
   const [isToggleOpen, setIsToggleOpen] = useState(true);
@@ -30,14 +36,10 @@ const Memory = () => {
   const user = useRecoilValue(userState);
 
   const audioRef = useRef<HTMLAudioElement>(null);
-  const { moodDiaryCards } = useGetRecordList(Number(user.userId), memoryType === '지난 기록들');
-  console.log(moodDiaryCards);
+  const { moodDiaryCards } = useGetRecordList(user.userId + '', memoryType === '지난 기록들');
+  const { moodDiaryId, assistant, answer, summary } = useGetTodayList(user.userId + '', memoryType === '오늘의 기록');
 
-  // 넷 다 서버에서 와야 함
-  const character = useRecoilValue(characterState);
-  const moodDiaryId = useRecoilValue(todayMoodDiaryIdState);
-  const SUMMARY_LIST = ['히히', '히히'];
-  const answer = '응답이라구요';
+  const SUMMARY_LIST = summary ? summary.split('\n').map((text: string) => text.replace(/^- /, '')) : [''];
 
   const { mutate: postAiAudio, isSuccess, data } = usePostAiAudio(Number(moodDiaryId));
 
@@ -111,8 +113,8 @@ const Memory = () => {
           {memoryType === '오늘의 기록' && (
             <>
               <ReplyImg>
-                {character === '동글이' && <ReplyCompleteDgIcon />}
-                {character === '뾰족이' && <ReplyCompletePjIcon />}
+                {assistant === '동글이' && <ReplyCompleteDgIcon />}
+                {assistant === '뾰족이' && <ReplyCompletePjIcon />}
                 {isPlaying ? <ReplyPauseIcon onClick={onClickReplyVid} /> : <ReplyPlayIcon onClick={onClickReplyVid} />}
                 {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
                 <Audio id="audioPlayer" controls ref={audioRef}></Audio>
@@ -122,19 +124,20 @@ const Memory = () => {
                 onClickToggle={onClickToggle}
                 answer={answer}
                 summary={SUMMARY_LIST}
+                memoryCharacter={assistant}
               />
             </>
           )}
           {memoryType === '지난 기록들' && (
             // 서버에서 온 리스트로 map돌리기
             <Container>
-              {MEMORY_LIST.map((memory) => (
+              {moodDiaryCards.map((memory: moodDiaryType) => (
                 <LastMemoryBox
-                  key={memory.id}
-                  id={memory.id}
-                  date={memory.date}
-                  feeling={memory.feeling}
-                  onClick={() => onClickMemoryBox(memory.id + '')}
+                  key={memory.moodDiaryId}
+                  id={memory.moodDiaryId}
+                  date={memory.diaryDate}
+                  feeling={memory.mood}
+                  onClick={() => onClickMemoryBox(memory.moodDiaryId + '')}
                 />
               ))}
             </Container>

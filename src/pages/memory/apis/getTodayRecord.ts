@@ -1,8 +1,8 @@
 import { client } from '../../../utils/apis/axios';
 
-const getRecordList = async (memberId: string) => {
+const getTodayList = async (memberId: string) => {
   try {
-    const response = await client.get(`/api/v1/diary/list/${memberId}`);
+    const response = await client.get(`/api/v1/diary/today/${memberId}`);
     console.log(response);
 
     return response.data;
@@ -11,4 +11,4 @@ const getRecordList = async (memberId: string) => {
   }
 };
 
-export default getRecordList;
+export default getTodayList;

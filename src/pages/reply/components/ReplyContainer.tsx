@@ -11,17 +11,18 @@ interface ReplyContainerPropsType {
   onClickToggle: () => void;
   answer: string;
   summary: string[];
+  assistant?: string;
 }
 
 const ReplyContainer = (props: ReplyContainerPropsType) => {
-  const { isToggleOpen, onClickToggle, answer, summary } = props;
+  const { isToggleOpen, onClickToggle, answer, summary, assistant } = props;
   const character = useRecoilValue(characterState);
   const user = useRecoilValue(userState);
 
   return (
     <>
       <ReplyDiv>
-        <ReplyTitle>{`안녕 나 ${character}야 \n오늘의 답변을 보내줄게!`}</ReplyTitle>
+        <ReplyTitle>{`안녕 나 ${assistant !== undefined ? assistant : character}야 \n오늘의 답변을 보내줄게!`}</ReplyTitle>
         <ReplyContent>{answer}</ReplyContent>
       </ReplyDiv>
       <Spacing marginBottom="1" />
