@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import LastMemoryBox from './components/LastMemoryBox';
-import { MEMORY_LIST } from './constants/constants';
 import { useGetRecordList, useGetTodayList } from './hooks/queries';
 import {
   ArrowLeftIc,
@@ -16,8 +15,6 @@ import {
 } from '../../assets/svgs';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
-import { characterState } from '../../states/characterState';
-import { todayMoodDiaryIdState } from '../../states/todayMoodDiaryIdState';
 import { userState } from '../../states/userState';
 import ReplyContainer from '../reply/components/ReplyContainer';
 import { usePostAiAudio } from '../reply/hooks/queries';
@@ -108,7 +105,7 @@ const Memory = () => {
         </MemoryType>
       </ListTypeWrapper>
       <Spacing marginBottom="3" />
-      {moodDiaryCards && moodDiaryCards.length ? (
+      {moodDiaryCards && moodDiaryCards.length && assistant !== '' ? (
         <>
           {memoryType === '오늘의 기록' && (
             <>

@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 // import { useMutation,useQueryClient } from '@tanstack/react-query';
 
+import getRecordDetail from '../apis/getRecordDetail';
 import getRecordList from '../apis/getRecordList';
 import getTodayList from '../apis/getTodayRecord';
 
 export const QUERY_KEY_MEMORY = {
   getRecordList: 'getRecordList',
   getTodayList: 'getTodayList',
+  getRecordDetail: 'getRecordDetail',
 };
 
 // 지난 기록 리스트 get
@@ -36,4 +38,19 @@ export const useGetTodayList = (memberId: string, isTodayClicked: boolean) => {
   const summary = data?.data?.summary;
 
   return { moodDiaryId, assistant, answer, summary };
+};
+
+// 기록 디테일 get
+export const useGetRecordDetail = (moodDiaryId: number) => {
+  const { data } = useQuery({
+    queryKey: [QUERY_KEY_MEMORY.getRecordDetail, moodDiaryId],
+    queryFn: () => getRecordDetail(moodDiaryId),
+  });
+
+  const moodDiaryIdNew = data?.data?.moodDiaryId;
+  const assistant = data?.data?.assistant;
+  const answer = data?.data?.answer;
+  const summary = data?.data?.summary;
+
+  return { moodDiaryIdNew, assistant, answer, summary };
 };

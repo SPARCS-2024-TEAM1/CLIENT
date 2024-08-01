@@ -1,30 +1,28 @@
 import styled from '@emotion/styled';
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import { useGetRecordDetail } from './hooks/queries';
 import { ArrowLeftIc, ReplyCompleteDgIc, ReplyCompletePjIc, ReplyPlayIc, ReplyPauseIc } from '../../assets/svgs';
 import Header from '../../components/commons/Header';
 import Spacing from '../../components/commons/Spacing';
-import { characterState } from '../../states/characterState';
-import { todayMoodDiaryIdState } from '../../states/todayMoodDiaryIdState';
 import ReplyContainer from '../reply/components/ReplyContainer';
 import { usePostAiAudio } from '../reply/hooks/queries';
 
 const LastMemory = () => {
   const navigate = useNavigate();
+  const { memoryId } = useParams();
   const [isToggleOpen, setIsToggleOpen] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const { assistant, answer, summary } = useGetRecordDetail(Number(memoryId));
+  console.log(memoryId);
+
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // 둘 다 서버에서 와야 함
-  const character = useRecoilValue(characterState);
-  const moodDiaryId = useRecoilValue(todayMoodDiaryIdState);
-  const SUMMARY_LIST = ['히히', '히히'];
-  const answer = '응답이라구요';
+  const SUMMARY_LIST = summary ? summary.split('\n').map((text: string) => text.replace(/^- /, '')) : [''];
 
-  const { mutate: postAiAudio, isSuccess, data } = usePostAiAudio(Number(moodDiaryId));
+  const { mutate: postAiAudio, isSuccess, data } = usePostAiAudio(Number(memoryId));
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -74,8 +72,8 @@ const LastMemory = () => {
       <Header LeftSvg={ArrowLeftIc} onClickLeft={onClickBack} title="지난 감정 기록" />
       <Spacing marginBottom="3" />
       <ReplyImg>
-        {character === '동글이' && <ReplyCompleteDgIcon />}
-        {character === '뾰족이' && <ReplyCompletePjIcon />}
+        {assistant === '동글이' && <ReplyCompleteDgIcon />}
+        {assistant === '뾰족이' && <ReplyCompletePjIcon />}
         {isPlaying ? <ReplyPauseIcon onClick={onClickReplyVid} /> : <ReplyPlayIcon onClick={onClickReplyVid} />}
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <Audio id="audioPlayer" controls ref={audioRef}></Audio>
@@ -85,6 +83,7 @@ const LastMemory = () => {
         onClickToggle={onClickToggle}
         answer={answer}
         summary={SUMMARY_LIST}
+        memoryCharacter={assistant}
       />
     </Wrapper>
   );
