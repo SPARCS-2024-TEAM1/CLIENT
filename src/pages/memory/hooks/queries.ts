@@ -36,8 +36,9 @@ export const useGetTodayList = (memberId: string, isTodayClicked: boolean) => {
   const assistant = data?.data?.assistant;
   const answer = data?.data?.answer;
   const summary = data?.data?.summary;
+  const code = data?.code;
 
-  return { moodDiaryId, assistant, answer, summary };
+  return { moodDiaryId, assistant, answer, summary, code };
 };
 
 // 기록 디테일 get

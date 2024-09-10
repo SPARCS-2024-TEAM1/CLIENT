@@ -105,44 +105,43 @@ const Memory = () => {
         </MemoryType>
       </ListTypeWrapper>
       <Spacing marginBottom="3" />
-      {moodDiaryCards && moodDiaryCards.length && assistant !== '' ? (
-        <>
-          {memoryType === '오늘의 기록' && (
-            <>
-              <ReplyImg>
-                {assistant === '동글이' && <ReplyCompleteDgIcon />}
-                {assistant === '뾰족이' && <ReplyCompletePjIcon />}
-                {isPlaying ? <ReplyPauseIcon onClick={onClickReplyVid} /> : <ReplyPlayIcon onClick={onClickReplyVid} />}
-                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-                <Audio id="audioPlayer" controls ref={audioRef}></Audio>
-              </ReplyImg>
-              <ReplyContainer
-                isToggleOpen={isToggleOpen}
-                onClickToggle={onClickToggle}
-                answer={answer}
-                summary={SUMMARY_LIST}
-                memoryCharacter={assistant}
+      {memoryType === '오늘의 기록' &&
+        (moodDiaryId !== undefined ? (
+          <>
+            <ReplyImg>
+              {assistant === '동글이' && <ReplyCompleteDgIcon />}
+              {assistant === '뾰족이' && <ReplyCompletePjIcon />}
+              {isPlaying ? <ReplyPauseIcon onClick={onClickReplyVid} /> : <ReplyPlayIcon onClick={onClickReplyVid} />}
+              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+              <Audio id="audioPlayer" controls ref={audioRef}></Audio>
+            </ReplyImg>
+            <ReplyContainer
+              isToggleOpen={isToggleOpen}
+              onClickToggle={onClickToggle}
+              answer={answer}
+              summary={SUMMARY_LIST}
+              memoryCharacter={assistant}
+            />
+          </>
+        ) : (
+          <RecordEmptyIcon onClick={onClickEmptyText} />
+        ))}
+      {memoryType === '지난 기록들' &&
+        (moodDiaryCards && moodDiaryCards.length ? (
+          <Container>
+            {moodDiaryCards.map((memory: moodDiaryType) => (
+              <LastMemoryBox
+                key={memory.moodDiaryId}
+                id={memory.moodDiaryId}
+                date={memory.diaryDate}
+                feeling={memory.mood}
+                onClick={() => onClickMemoryBox(memory.moodDiaryId + '')}
               />
-            </>
-          )}
-          {memoryType === '지난 기록들' && (
-            // 서버에서 온 리스트로 map돌리기
-            <Container>
-              {moodDiaryCards.map((memory: moodDiaryType) => (
-                <LastMemoryBox
-                  key={memory.moodDiaryId}
-                  id={memory.moodDiaryId}
-                  date={memory.diaryDate}
-                  feeling={memory.mood}
-                  onClick={() => onClickMemoryBox(memory.moodDiaryId + '')}
-                />
-              ))}
-            </Container>
-          )}
-        </>
-      ) : (
-        <RecordEmptyIcon onClick={onClickEmptyText} />
-      )}
+            ))}
+          </Container>
+        ) : (
+          <RecordEmptyIcon onClick={onClickEmptyText} />
+        ))}
     </Wrapper>
   );
 };

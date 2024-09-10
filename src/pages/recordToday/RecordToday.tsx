@@ -58,7 +58,7 @@ const RecordToday = () => {
   }, []);
 
   const { mutate: postTodayFeeling, isSuccess, moodDiaryId, summary, isPending } = usePostTodayFeeling();
-  console.log(onRec);
+
   // 뒤로가기 눌렀을 때 열리는 모달
   const onClickBack = () => {
     if (isStart) {
@@ -272,7 +272,6 @@ const RecordToday = () => {
     }
   }, [audioUrl]);
 
-  console.log(serverAudio);
 
   useEffect(() => {
     return () => {

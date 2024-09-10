@@ -14,7 +14,6 @@ export const postSignup = async ({ nickname, phoneNumber }: postSignupType) => {
       phoneNumber: phoneNumber,
     });
 
-    console.log(data);
     return data;
   } catch (err) {
     console.error('유저 회원가입 에러 : ', err);

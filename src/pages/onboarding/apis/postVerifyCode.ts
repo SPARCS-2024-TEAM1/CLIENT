@@ -13,7 +13,6 @@ export const postVerifyCode = async ({ phoneNumber, verificationCode }: postVeri
       phoneNumber: phoneNumber,
       verificationCode: verificationCode,
     });
-    console.log(response);
     return response.data;
   } catch (err) {
     console.error('문자인증번호 유효성 에러: ', err);

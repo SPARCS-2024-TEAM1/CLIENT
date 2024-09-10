@@ -24,7 +24,6 @@ export const postTodayFeeling = async ({ memberId, mood, assistant, file }: post
       },
     });
 
-    console.log(response);
     return response.data;
   } catch (err) {
     console.error('음성 보내면 요약본 주는 post : ', err);

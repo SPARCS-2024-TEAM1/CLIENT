@@ -16,7 +16,6 @@ const LastMemory = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const { assistant, answer, summary } = useGetRecordDetail(Number(memoryId));
-  console.log(memoryId);
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
