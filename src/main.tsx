@@ -7,5 +7,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
     {/* eslint-disable-next-line prettier/prettier */}
-  </React.StrictMode>,
+  </React.StrictMode>
 );

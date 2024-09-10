@@ -77,6 +77,7 @@ const Step문자인증 = () => {
           nickName: nickname,
           userId: memberId,
         }));
+        localStorage.setItem('nickname', nickname);
         navigate('/main');
       } else {
         setIsValid(true);
