@@ -2,6 +2,7 @@ import { Global, ThemeProvider } from '@emotion/react';
 import styled from '@emotion/styled';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { RecoilRoot } from 'recoil';
 
 import Router from './Router';
 import globalStyle from './styles/globalStyle';
@@ -32,12 +33,14 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Wrapper>
-        <ThemeProvider theme={theme}>
-          <Global styles={globalStyle} />
-          <Router />
-        </ThemeProvider>
-      </Wrapper>
+      <ThemeProvider theme={theme}>
+        <Global styles={globalStyle} />
+        <RecoilRoot>
+          <Wrapper>
+            <Router />
+          </Wrapper>
+        </RecoilRoot>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };
@@ -47,7 +50,8 @@ export default App;
 const Wrapper = styled.div`
   width: 100vw;
   min-height: calc(var(--vh, 1vh) * 100);
+  padding: 0 2rem;
   border: none;
 
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.grayScaleBg};
 `;
