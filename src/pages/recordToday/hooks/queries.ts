@@ -17,5 +17,7 @@ export const usePostTodayFeeling = () => {
   const moodDiaryId = data?.data?.moodDiaryId;
   const summary = data?.data?.summary;
 
+  console.log(summary);
+
   return { mutate, isSuccess, data, moodDiaryId, summary, isPending };
 };

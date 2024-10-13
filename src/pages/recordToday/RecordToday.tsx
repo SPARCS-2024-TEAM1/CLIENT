@@ -33,11 +33,11 @@ const RecordToday = () => {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [media, setMedia] = useState<MediaRecorder | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [onRec, setOnRec] = useState(true);
+  const [, setOnRec] = useState(true);
   const [source, setSource] = useState<MediaStreamAudioSourceNode | null>(null);
   const [analyser, setAnalyser] = useState<ScriptProcessorNode | null>(null);
   const [audioUrl, setAudioUrl] = useState<Blob | null>(null);
-  const [serverAudio, setServerAudio] = useState<string | null>(null);
+  const [, setServerAudio] = useState<string | null>(null);
 
   // lottie
   const lottieContainer = useRef<HTMLDivElement>(null!);
@@ -271,7 +271,6 @@ const RecordToday = () => {
       });
     }
   }, [audioUrl]);
-
 
   useEffect(() => {
     return () => {
